@@ -5,25 +5,42 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'WELCOME TO',
               style: TextStyle(
-                fontSize:40,
+                fontSize: 40,
                 color: Colors.blueAccent,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 0), // Adding some space between the texts
-            Text(
+            const SizedBox(height: 8), // Adding some space between the texts
+            const Text(
               'PhotoApp',
               style: TextStyle(
                 fontSize: 64, // Adjust the font size as needed
                 color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 300), // Adding space between the title and the button
+            ElevatedButton(
+              onPressed: () {
+                // Add your navigation logic here
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // Set the background color to blue
+                minimumSize: const Size(200, 50), // Set the minimum width and height
+              ),
+              child: const Text(
+                'Get started',
+                style: TextStyle(
+                  color: Colors.white, // Set the text color to white
+                  fontSize: 24,
+                ),
               ),
             ),
           ],
