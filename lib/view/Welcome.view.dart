@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:photo_app/view/home.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({Key? key}) : super(key: key);
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +31,13 @@ class WelcomeView extends StatelessWidget {
             ),
             const SizedBox(height: 300), // Adding space between the title and the button
             ElevatedButton(
-              onPressed: () {
-                // Add your navigation logic here
+              onPressed: (
+              )
+              {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Home()),
+                );// Add your navigation logic here
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue, // Set the background color to blue
