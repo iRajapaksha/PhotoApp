@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/galleryManager.dart';
 import 'package:photo_app/view/topSuggestions.dart';
-
-
+import 'package:photo_app/components/navBar.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -10,8 +9,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appbar(),
-      endDrawer: _endDrawer(),
+      appBar: appBar(),
+      endDrawer: endDrawer(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,34 +55,5 @@ class Home extends StatelessWidget {
     );
   }
 
-  AppBar _appbar() => AppBar(
-    automaticallyImplyLeading: false,
-    title: Text("PhotoApp"));
-  
-  Drawer _endDrawer() {
-    return Drawer(
-      child: ListView(
-        children: [
-          DrawerHeader(child: Text("App logo")),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Home Page"),
-          ),
-          ListTile(
-            leading: Icon(Icons.info_rounded),
-            title: Text("About"),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text("Settings"),
-          ),
-          ListTile(
-            leading: Icon(Icons.contact_emergency),
-            title: Text("Contact Us"),
-          ),
-        ],
-      ),
-    );
-  }
 
 }
