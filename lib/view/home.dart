@@ -39,7 +39,7 @@ class Home extends StatelessWidget {
                 ); //
               },
               child: Text(
-                "Gallery \nmanager",
+                "Gallery \nManager",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, color: Colors.white),
               ),
@@ -54,6 +54,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
-
 }
