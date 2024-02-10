@@ -8,7 +8,7 @@ Drawer endDrawer(BuildContext context) {
   return Drawer(
     child: ListView(
       children: [
-        DrawerHeader(child: Text("App logo")),
+        const DrawerHeader(child: Text("App logo")),
         GestureDetector(
           onTap: () {
             Navigator.push(
@@ -18,20 +18,20 @@ Drawer endDrawer(BuildContext context) {
             // context
             // MaterialPageRoute(builder: (context) => Home()));
           },
-          child: ListTile(
+          child: const ListTile(
             leading: Icon(Icons.home),
             title: Text("Home Page"),
           ),
         ),
-        ListTile(
+        const ListTile(
           leading: Icon(Icons.info_rounded),
           title: Text("About"),
         ),
-        ListTile(
+        const ListTile(
           leading: Icon(Icons.settings),
           title: Text("Settings"),
         ),
-        ListTile(
+        const ListTile(
           leading: Icon(Icons.contact_emergency),
           title: Text("Contact Us"),
         ),
