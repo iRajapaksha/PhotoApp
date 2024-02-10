@@ -17,8 +17,9 @@ class Home extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TopSuggestions()));
+                
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TopSuggestions()));
               },
               child: Text(
                 "Top \nSuggetions",

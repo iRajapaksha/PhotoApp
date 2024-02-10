@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_app/components/navBar.dart';
 import 'package:photo_app/models/Caption.dart';
+import 'package:photo_app/models/Photo.dart';
+import 'package:photo_app/view/shareOn.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class TopSuggestionSelected extends StatefulWidget {
-  const TopSuggestionSelected({super.key});
+  final Photo selectedPhoto;
+  const TopSuggestionSelected({super.key, required this.selectedPhoto});
 
   @override
   State<TopSuggestionSelected> createState() => _TopSuggestionSelectedState();
 }
 
 class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
+  int selectedCaptionIndex = 0;
   List<Caption> captions = [];
 
   void _getInfo() {
@@ -30,18 +35,33 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                 BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
             height: 35,
             width: 500,
-            child: Padding(
-              padding: const EdgeInsets.all(7.0),
-              child: Text("Top Suggestions"),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 8,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: SvgPicture.asset("assets/icons/arrow_left.svg")),
+                SizedBox(
+                  width: 8,
+                ),
+                Text("Top Suggestions"),
+              ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           Container(
             height: 300,
             //decoration: BoxDecoration(color: Colors.amberAccent),
-            child: Image.asset("assets/images/2.png", fit: BoxFit.cover,),
+            child: Image.asset(
+              widget.selectedPhoto.filePath,
+              fit: BoxFit.cover,
+            ),
           ),
           SizedBox(
             height: 30,
@@ -50,32 +70,48 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
             "Select a Caption",
             textAlign: TextAlign.left,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           SizedBox(
             height: 150,
             child: ScrollSnapList(
-                itemBuilder: _buildListItem,
-                itemCount: captions.length,
-                itemSize: 60,
-                onItemFocus: (index) {},
-                dynamicItemSize: true,
-                scrollDirection: Axis.vertical,),
+              itemBuilder: _buildListItem,
+              itemCount: captions.length,
+              itemSize: 60,
+              onItemFocus: (index) {
+                setState(() {
+                  selectedCaptionIndex = index;
+                });
+              },
+              dynamicItemSize: true,
+              scrollDirection: Axis.vertical,
+            ),
           ),
-          TextField(),
-          SizedBox(height: 15,),
+          Text(captions[selectedCaptionIndex].description),
+          SizedBox(
+            height: 15,
+          ),
           ElevatedButton(
-            onPressed: (){},
-            child: Text("Share",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                minimumSize: const Size(120, 40),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)))
-                    )
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ShareOn(
+                      selectedPhoto : widget.selectedPhoto,
+                      selectedCaption: captions[selectedCaptionIndex],
+                    )));
+              },
+              child: Text(
+                "Share",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  minimumSize: const Size(120, 40),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20))))
         ],
       ),
     );
@@ -90,7 +126,10 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
         elevation: 20,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Text(caption.description, textAlign: TextAlign.center,),
+          child: Text(
+            caption.description,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

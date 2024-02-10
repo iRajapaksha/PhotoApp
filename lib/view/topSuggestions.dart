@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_app/components/navBar.dart';
 import 'package:photo_app/models/Photo.dart';
 import 'package:photo_app/view/topSuggestionSelected.dart';
@@ -12,6 +13,8 @@ class TopSuggestions extends StatefulWidget {
 }
 
 class _TopSuggestionsState extends State<TopSuggestions> {
+  int selectedPhotoIndex = 0;
+
   List<Photo> photos = [];
 
   void _getInitInfo() {
@@ -31,9 +34,21 @@ class _TopSuggestionsState extends State<TopSuggestions> {
                 BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
             height: 35,
             width: 500,
-            child: Padding(
-              padding: const EdgeInsets.all(7.0),
-              child: Text("Top Suggestions"),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 8,
+                ),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: SvgPicture.asset("assets/icons/arrow_left.svg")),
+                SizedBox(
+                  width: 8,
+                ),
+                Text("Top Suggestions"),
+              ],
             ),
           ),
           SizedBox(
@@ -46,7 +61,11 @@ class _TopSuggestionsState extends State<TopSuggestions> {
                 itemBuilder: _buildListItem,
                 itemCount: photos.length,
                 itemSize: 200,
-                onItemFocus: (index) {},
+                onItemFocus: (index) {
+                  setState(() {
+                    selectedPhotoIndex = index;
+                  });
+                },
                 dynamicItemSize: true,
                 duration: 10,
               ),
@@ -60,7 +79,8 @@ class _TopSuggestionsState extends State<TopSuggestions> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => TopSuggestionSelected()));
+                      builder: (context) => TopSuggestionSelected(
+                          selectedPhoto: photos[selectedPhotoIndex])));
             },
             child: Text(
               "Select",
@@ -79,10 +99,10 @@ class _TopSuggestionsState extends State<TopSuggestions> {
             height: 20,
           ),
           ListTile(
-            title: Text("Taken On : "),
+            title: Text("Taken On : ${photos[selectedPhotoIndex].dateTime}"),
           ),
           ListTile(
-            title: Text("File Info : "),
+            title: Text("File Info : ${photos[selectedPhotoIndex].fileName}"),
           )
         ],
       ),
@@ -95,7 +115,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
       width: 200,
       height: 300,
       child: Card(
-        elevation: 12,
+        elevation: index == selectedPhotoIndex ? 15 : 12,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.asset(
