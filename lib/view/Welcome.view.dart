@@ -21,15 +21,15 @@ class WelcomeView extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8), // Adding some space between the texts
+            const SizedBox(height: 8),
             const Text(
               'PhotoApp',
               style: TextStyle(
-                fontSize: 64, // Adjust the font size as needed
+                fontSize: 64,
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 300), // Adding space between the title and the button
+            const SizedBox(height: 30), // Adjusted the height for better spacing
             ElevatedButton(
               onPressed: (
               )
@@ -40,13 +40,13 @@ class WelcomeView extends StatelessWidget {
                 );// Add your navigation logic here
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // Set the background color to blue
-                minimumSize: const Size(200, 50), // Set the minimum width and height
+                primary: Colors.blue, // Renamed backgroundColor to primary
+                minimumSize: const Size(200, 50),
               ),
               child: const Text(
                 'Get started',
                 style: TextStyle(
-                  color: Colors.white, // Set the text color to white
+                  color: Colors.white,
                   fontSize: 24,
                 ),
               ),

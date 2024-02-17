@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/Welcome.view.dart';
 
+
 void main() {
   runApp(const App());
 }
