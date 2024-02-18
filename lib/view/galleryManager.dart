@@ -32,7 +32,7 @@ class _GalleryManagerState extends State<GalleryManager> {
           children: [
             Container(
               decoration:
-                  BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
+              BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
               height: 35,
               width: 500,
               child: Row(
@@ -68,29 +68,29 @@ class _GalleryManagerState extends State<GalleryManager> {
                       height: 50,
                     ),
                     Container(
-                        height: 500,
+                        height: 450,
                         width: 300,
                         //decoration: BoxDecoration(color: Colors.amberAccent),
 
                         child: Column(
                           children: [
                             Container(
-                              height: 200,
+                              height: 150,
                               decoration:
-                                  BoxDecoration(color: Colors.amberAccent),
+                              BoxDecoration(color: Colors.amberAccent),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Expanded(
                               child: GridView.builder(
-                                itemCount: photos.length,
+                                  itemCount: photos.length,
                                   gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 3,
                                     crossAxisSpacing: 5,
                                     mainAxisSpacing: 5,
-                                    
+
                                   ),
                                   itemBuilder: (context, index) {
                                     return photoContainer(context, index);
@@ -117,7 +117,7 @@ class _GalleryManagerState extends State<GalleryManager> {
             ElevatedButton(
                 onPressed: () {}, child: Text("Clear the selected images")),
             SizedBox(
-              height: 30,
+              height: 15,
             )
           ],
         ),
@@ -128,11 +128,11 @@ class _GalleryManagerState extends State<GalleryManager> {
   void multiSelection(String path) {
     setState(() {
       if (selectedItems.contains(path)) {
-      selectedItems.remove(path);
-    } else
-      selectedItems.add(path);
+        selectedItems.remove(path);
+      } else
+        selectedItems.add(path);
     });
-    
+
   }
 
   GridTile photoContainer(BuildContext context, int index) {
@@ -154,13 +154,13 @@ class _GalleryManagerState extends State<GalleryManager> {
               height: 20,
               width: 20,
               child: Visibility(
-                visible: selectedItems.contains(photos[index].filePath),
-                child: Icon(Icons.check_rounded, color: Colors.black,)
-                ),
+                  visible: selectedItems.contains(photos[index].filePath),
+                  child: Icon(Icons.check_rounded, color: Colors.black,)
+              ),
               decoration: BoxDecoration(
                 color: selectedItems.contains(photos[index].filePath) ? Colors.blue : Colors.white,
                 shape: BoxShape.circle,
-                
+
               ),
             ),
           ),
