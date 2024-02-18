@@ -65,7 +65,7 @@ class _GalleryManagerState extends State<GalleryManager> {
                 Column(
                   children: [
                     SizedBox(
-                      height: 50,
+                      height: 25,
                     ),
                     Container(
                         height: 450,
@@ -80,7 +80,7 @@ class _GalleryManagerState extends State<GalleryManager> {
                               BoxDecoration(color: Colors.amberAccent),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
                             Expanded(
                               child: GridView.builder(
