@@ -27,15 +27,15 @@ class WelcomeView extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 30), // Adjusted the height for better spacing
+            const SizedBox(height: 30),
+            // Adjusted the height for better spacing
             ElevatedButton(
-              onPressed: (
-              )
-              {
-                  Navigator.push(
+              onPressed: () {
+                // Navigate to the home view page
+                Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Home()),
-                );// Add your navigation logic here
+                  MaterialPageRoute(builder: (context) => const Home()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue, // Renamed backgroundColor to primary
@@ -54,4 +54,5 @@ class WelcomeView extends StatelessWidget {
       ),
     );
   }
+
 }

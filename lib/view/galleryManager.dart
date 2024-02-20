@@ -117,7 +117,7 @@ class _GalleryManagerState extends State<GalleryManager> {
             ElevatedButton(
                 onPressed: () {}, child: Text("Clear the selected images")),
             SizedBox(
-              height: 15,
+              height: 27,
             )
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_app/view/galleryManager.dart';
 import 'package:photo_app/view/topSuggestions.dart';
 import 'package:photo_app/components/navBar.dart';
+import 'package:photo_app/view/galleryView.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -17,7 +18,7 @@ class Home extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                
+
                   Navigator.push(context,
                   MaterialPageRoute(builder: (context) => TopSuggestions()));
               },
@@ -49,6 +50,22 @@ class Home extends StatelessWidget {
                   minimumSize: const Size(250, 150),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20))),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to the gallery view page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GalleryView()),
+                );
+              },
+              child: const Text(
+                'Gallery',
+                style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 24,
+                ),
+              ),
             ),
           ],
         ),
