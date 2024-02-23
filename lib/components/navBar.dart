@@ -8,7 +8,7 @@ Drawer endDrawer(BuildContext context) {
   return Drawer(
     child: ListView(
       children: [
-        const DrawerHeader(child: Text("App logo")),
+      DrawerHeader(child: Image.asset("assets/icons/logo.png", fit: BoxFit.cover,)),
         GestureDetector(
           onTap: () {
             Navigator.push(

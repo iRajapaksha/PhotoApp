@@ -1,6 +1,6 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_app/components/navBar.dart';
 import 'package:photo_app/models/Photo.dart';
@@ -19,7 +19,7 @@ class _GalleryManagerState extends State<GalleryManager> {
     photos = Photo.getPhotos();
   }
 
-  HashSet selectedItems = new HashSet();
+  HashSet selectedItems =  HashSet();
   @override
   Widget build(BuildContext context) {
     getInitInfo();
@@ -32,12 +32,12 @@ class _GalleryManagerState extends State<GalleryManager> {
           children: [
             Container(
               decoration:
-              BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
+                  const BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
               height: 35,
               width: 500,
               child: Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   GestureDetector(
@@ -45,14 +45,14 @@ class _GalleryManagerState extends State<GalleryManager> {
                         Navigator.pop(context);
                       },
                       child: SvgPicture.asset("assets/icons/arrow_left.svg")),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
-                  Text("Gallery Manager"),
+                  const Text("Gallery Manager"),
                 ],
               ),
             ),
-            TabBar(tabs: [
+            const TabBar(tabs: [
               Tab(
                 text: "Duplicate",
               ),
@@ -64,8 +64,8 @@ class _GalleryManagerState extends State<GalleryManager> {
               child: TabBarView(children: [
                 Column(
                   children: [
-                    SizedBox(
-                      height: 25,
+                    const SizedBox(
+                      height: 50,
                     ),
                     Container(
                         height: 450,
@@ -77,52 +77,71 @@ class _GalleryManagerState extends State<GalleryManager> {
                             Container(
                               height: 150,
                               decoration:
-                              BoxDecoration(color: Colors.amberAccent),
+                                  const BoxDecoration(color: Colors.amberAccent),
                             ),
-                            SizedBox(
-                              height: 5,
+                            const SizedBox(
+                              height: 10,
                             ),
-                            Expanded(
-                              child: GridView.builder(
-                                  itemCount: photos.length,
-                                  gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 5,
-
-                                  ),
-                                  itemBuilder: (context, index) {
-                                    return photoContainer(context, index);
-                                  }),
-                            )
+                            _duplicatePhotos()
                           ],
                         ))
                   ],
                 ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Container(
-                      height: 300,
-                      width: 300,
-                      //  decoration: BoxDecoration(color: Colors.blueAccent),
-                    )
-                  ],
-                )
+                _defectedPhotos()
               ]),
             ),
             ElevatedButton(
-                onPressed: () {}, child: Text("Clear the selected images")),
-            SizedBox(
-              height: 27,
+                onPressed: () {},
+                child: Text("Delete ${selectedItems.length} images")),
+            const SizedBox(
+              height: 50,
             )
           ],
         ),
       ),
     );
+  }
+
+  Expanded _duplicatePhotos() {
+    return Expanded(
+                            child: GridView.builder(
+                              itemCount: photos.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5,
+                                  
+                                ),
+                                itemBuilder: (context, index) {
+                                  return photoContainer(context, index);
+                                }),
+                          );
+  }
+
+  Column _defectedPhotos() {
+    return Column(
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    height: 300,
+                    width: 300,
+                      //decoration: BoxDecoration(color: Colors.blueAccent),
+                    child: MasonryGridView.builder(
+                              itemCount: photos.length,
+                              gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2
+                                ),
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 10,
+                                itemBuilder: (context, index) {
+                                  return photoContainer(context, index);
+                                }),
+                  )
+                ],
+              );
   }
 
   void multiSelection(String path) {
