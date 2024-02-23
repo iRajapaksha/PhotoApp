@@ -32,12 +32,12 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
+              decoration: const BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
               height: 35,
               width: 500,
               child: Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   GestureDetector(
@@ -45,10 +45,10 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                         Navigator.pop(context);
                       },
                       child: SvgPicture.asset("assets/icons/arrow_left.svg")),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
-                  Text("Top Suggestions"),
+                  const Text("Top Suggestions"),
                 ],
               ),
             ),
@@ -63,14 +63,14 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               "Select a Caption",
               textAlign: TextAlign.left,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             SizedBox(

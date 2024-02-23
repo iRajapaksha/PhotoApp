@@ -65,17 +65,17 @@ class _GalleryManagerState extends State<GalleryManager> {
                 Column(
                   children: [
                     const SizedBox(
-                      height: 50,
+                      height: 30,
                     ),
                     Container(
                         height: 450,
-                        width: 300,
+                        width: 280,
                         //decoration: BoxDecoration(color: Colors.amberAccent),
 
                         child: Column(
                           children: [
                             Container(
-                              height: 150,
+                              height: 200,
                               decoration:
                                   const BoxDecoration(color: Colors.amberAccent),
                             ),
@@ -94,7 +94,7 @@ class _GalleryManagerState extends State<GalleryManager> {
                 onPressed: () {},
                 child: Text("Delete ${selectedItems.length} images")),
             const SizedBox(
-              height: 50,
+              height: 30,
             )
           ],
         ),
@@ -132,10 +132,10 @@ class _GalleryManagerState extends State<GalleryManager> {
                     child: MasonryGridView.builder(
                               itemCount: photos.length,
                               gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2
+                                crossAxisCount: 3
                                 ),
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 1,
+                                mainAxisSpacing: 5,
                                 itemBuilder: (context, index) {
                                   return photoContainer(context, index);
                                 }),

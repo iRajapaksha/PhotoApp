@@ -1,7 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:photo_app/view/topSuggestionSelected.dart';
+
 
 class GalleryView extends StatelessWidget {
   const GalleryView({Key? key}) : super(key: key);
@@ -16,31 +17,30 @@ class GalleryView extends StatelessWidget {
         future: _loadImages(context),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             List<String>? imagePaths = snapshot.data;
             if (imagePaths == null || imagePaths.isEmpty) {
-              return Center(child: Text('No images found.'));
+              return const Center(child: Text('No images found.'));
             }
-            return SingleChildScrollView(
+            return GridView.builder(
               scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    StaggeredGrid.count(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 3,
-                      crossAxisSpacing: 3,
-                      children: imagePaths.map((path) {
-                        return Image(image: AssetImage(path));
-                      }).toList(),
-                    ),
-                  ],
-                ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // Only 1 item horizontally
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
               ),
+              itemCount: imagePaths.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    _showImagePreview(context, imagePaths[index]);
+                  },
+                  child: Image(image: AssetImage(imagePaths[index])),
+                );
+              },
             );
           }
         },
@@ -55,4 +55,61 @@ class GalleryView extends StatelessWidget {
         .where((String key) => key.startsWith('assets/images/')) // Change the path accordingly
         .toList();
   }
+
+  void _showImagePreview(BuildContext context, String imagePath) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImagePreviewScreen(imagePath: imagePath),
+      ),
+    );
+  }
 }
+
+class ImagePreviewScreen extends StatelessWidget {
+  final String imagePath;
+
+  const ImagePreviewScreen({Key? key, required this.imagePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(image: AssetImage(imagePath)),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 30,
+                  child: Expanded(child: Container()), // Empty container takes up remaining space
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => const TopSuggestionSelected(selectedPhoto: selectedPhoto)),
+                        // );
+                      },
+                      child: const Text('Share'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
