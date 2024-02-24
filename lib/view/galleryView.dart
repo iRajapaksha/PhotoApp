@@ -1,8 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:photo_app/view/topSuggestionSelected.dart';
-
 
 class GalleryView extends StatelessWidget {
   const GalleryView({Key? key}) : super(key: key);
