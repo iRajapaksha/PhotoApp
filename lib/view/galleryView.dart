@@ -2,28 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:photo_app/view/topSuggestionSelected.dart';
-import '../models/Photo.dart';
 
-class GalleryView extends StatefulWidget {
+
+class GalleryView extends StatelessWidget {
   const GalleryView({Key? key}) : super(key: key);
-
-  @override
-  State<GalleryView> createState() => _GalleryViewState();
-}
-
-class _GalleryViewState extends State<GalleryView> {
-  List<Photo> photos = [];
-  int? selectedPhotoIndex;
-
-  @override
-  void initState() {
-    super.initState();
-    _getInitInfo();
-  }
-
-  void _getInitInfo() {
-    photos = Photo.getPhotos();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +28,7 @@ class _GalleryViewState extends State<GalleryView> {
             return GridView.builder(
               scrollDirection: Axis.horizontal,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                crossAxisCount: 3, // Only 1 item horizontally
                 crossAxisSpacing: 4.0,
                 mainAxisSpacing: 4.0,
               ),
@@ -54,9 +36,6 @@ class _GalleryViewState extends State<GalleryView> {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      selectedPhotoIndex = index;
-                    });
                     _showImagePreview(context, imagePaths[index]);
                   },
                   child: Image(image: AssetImage(imagePaths[index])),
@@ -73,7 +52,7 @@ class _GalleryViewState extends State<GalleryView> {
     final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
     return manifestMap.keys
-        .where((String key) => key.startsWith('assets/images/'))
+        .where((String key) => key.startsWith('assets/images/')) // Change the path accordingly
         .toList();
   }
 
@@ -81,11 +60,7 @@ class _GalleryViewState extends State<GalleryView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ImagePreviewScreen(
-          imagePath: imagePath,
-          selectedPhotoIndex: selectedPhotoIndex,
-          photos: photos,
-        ),
+        builder: (context) => ImagePreviewScreen(imagePath: imagePath),
       ),
     );
   }
@@ -93,15 +68,8 @@ class _GalleryViewState extends State<GalleryView> {
 
 class ImagePreviewScreen extends StatelessWidget {
   final String imagePath;
-  final int? selectedPhotoIndex;
-  final List<Photo> photos;
 
-  const ImagePreviewScreen({
-    Key? key,
-    required this.imagePath,
-    required this.selectedPhotoIndex,
-    required this.photos,
-  }) : super(key: key);
+  const ImagePreviewScreen({Key? key, required this.imagePath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -125,14 +93,10 @@ class ImagePreviewScreen extends StatelessWidget {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (selectedPhotoIndex != null && selectedPhotoIndex! < photos.length) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TopSuggestionSelected(selectedPhoto: photos[selectedPhotoIndex!]),
-                            ),
-                          );
-                        }
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => const TopSuggestionSelected(selectedPhoto: selectedPhoto)),
+                        // );
                       },
                       child: const Text('Share'),
                     ),
@@ -140,9 +104,12 @@ class ImagePreviewScreen extends StatelessWidget {
                 ),
               ],
             ),
+
           ],
         ),
       ),
     );
   }
 }
+
+
