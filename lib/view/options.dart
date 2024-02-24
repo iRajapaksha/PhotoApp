@@ -35,7 +35,7 @@ class Options extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 70,
+            height: 20,
           ),
           Container(
             child: Column(
@@ -63,7 +63,7 @@ class Options extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Center(child: Icon(Icons.cloud , size: 100,)),
+                      Center(child: Icon(Icons.cloud , size: 75,)),
                       Center(
                         child: Container(
                           height: 50,
@@ -107,10 +107,10 @@ class Options extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 Container(
-                  height: 300,
+                  height: 285,
                   width: 300,
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 200, 200, 200),
@@ -131,7 +131,7 @@ class Options extends StatelessWidget {
                         ),
                         ),
                       ),
-                      Center(child: Icon(Icons.settings, size: 100,)),
+                      Center(child: Icon(Icons.settings, size: 75,)),
                       Center(child: ElevatedButton(onPressed: () {}, child: Text("Storage"))),
                       Center(child: ElevatedButton(onPressed: () {}, child: Text("About"))),
                       Center(child: ElevatedButton(onPressed: () {}, child: Text("Privacy"))),
