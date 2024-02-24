@@ -19,12 +19,12 @@ class ShareOn extends StatelessWidget {
         children: [
           Container(
             decoration:
-                BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
+                const BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
             height: 35,
             width: 500,
             child: Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 GestureDetector(
@@ -32,19 +32,19 @@ class ShareOn extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: SvgPicture.asset("assets/icons/arrow_left.svg")),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
-                Text("Top Suggestions"),
+                const Text("Top Suggestions"),
             
               ],
             ),
           ),
-          SizedBox(height: 50,),
+          const SizedBox(height: 50,),
           Container(
                   height: 300,
                   width: 300,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.amberAccent
                   ),
                 ),
@@ -56,7 +56,7 @@ class ShareOn extends StatelessWidget {
                     color: const Color.fromARGB(255, 181, 181, 181),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Row(

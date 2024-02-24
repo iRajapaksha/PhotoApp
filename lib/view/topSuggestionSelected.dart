@@ -48,7 +48,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                   const SizedBox(
                     width: 8,
                   ),
-                  const Text("Top Suggestions"),
+                  const Text("Sharing Content"),
                 ],
               ),
             ),
