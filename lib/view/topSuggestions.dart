@@ -31,12 +31,12 @@ class _TopSuggestionsState extends State<TopSuggestions> {
         children: [
           Container(
             decoration:
-                BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
+                const BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
             height: 35,
             width: 500,
             child: Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 GestureDetector(
@@ -44,14 +44,14 @@ class _TopSuggestionsState extends State<TopSuggestions> {
                       Navigator.pop(context);
                     },
                     child: SvgPicture.asset("assets/icons/arrow_left.svg")),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
-                Text("Top Suggestions"),
+                const Text("Top Suggestions"),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           SizedBox(
@@ -71,7 +71,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ElevatedButton(
@@ -82,20 +82,20 @@ class _TopSuggestionsState extends State<TopSuggestions> {
                       builder: (context) => TopSuggestionSelected(
                           selectedPhoto: photos[selectedPhotoIndex])));
             },
-            child: Text(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                minimumSize: const Size(150, 40),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+            child: const Text(
               "Select",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               ),
             ),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                minimumSize: const Size(150, 40),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ListTile(

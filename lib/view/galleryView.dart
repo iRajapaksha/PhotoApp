@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:photo_app/view/topSuggestionSelected.dart';
 import '../models/Photo.dart';
 
@@ -117,7 +117,7 @@ class ImagePreviewScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 30,
-                  child: Expanded(child: Container()), // Empty container takes up remaining space
+                  child: Container(), // Empty container takes up remaining space
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,

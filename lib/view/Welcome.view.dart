@@ -38,7 +38,7 @@ class WelcomeView extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // Renamed backgroundColor to primary
+                backgroundColor: Colors.blue, // Renamed backgroundColor to primary
                 minimumSize: const Size(200, 50),
               ),
               child: const Text(

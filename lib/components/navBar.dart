@@ -3,7 +3,7 @@ import 'package:photo_app/view/home.dart';
 import 'package:photo_app/view/options.dart';
 
 AppBar appBar() =>
-    AppBar(automaticallyImplyLeading: false, title: Text("PhotoApp"));
+    AppBar(automaticallyImplyLeading: false, title: const Text("PhotoApp"));
 
 Drawer endDrawer(BuildContext context) {
   return Drawer(
@@ -18,7 +18,7 @@ Drawer endDrawer(BuildContext context) {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Home()),
+              MaterialPageRoute(builder: (context) => const Home()),
             ); // Ad
             // context
             // MaterialPageRoute(builder: (context) => Home()));
@@ -36,7 +36,7 @@ Drawer endDrawer(BuildContext context) {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context)=> Options()));
+              MaterialPageRoute(builder: (context)=> const Options()));
           },
           child: const ListTile(
             leading: Icon(Icons.settings),

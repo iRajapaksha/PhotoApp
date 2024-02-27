@@ -55,7 +55,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
             const SizedBox(
               height: 50,
             ),
-            Container(
+            SizedBox(
               height: 300,
               //decoration: BoxDecoration(color: Colors.amberAccent),
               child: Image.asset(
@@ -89,7 +89,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
               ),
             ),
             Text(captions[selectedCaptionIndex].description),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             ElevatedButton(
@@ -100,18 +100,18 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                         selectedCaption: captions[selectedCaptionIndex],
                       )));
                 },
-                child: Text(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    minimumSize: const Size(120, 40),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
+                child: const Text(
                   "Share",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    minimumSize: const Size(120, 40),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))))
+                ))
           ],
         ),
       ),

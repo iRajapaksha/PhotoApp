@@ -48,7 +48,7 @@ class ShareOn extends StatelessWidget {
                     color: Colors.amberAccent
                   ),
                 ),
-                SizedBox(height: 50,),
+                const SizedBox(height: 50,),
           Container(
                   height: 200,
                   width: 300,

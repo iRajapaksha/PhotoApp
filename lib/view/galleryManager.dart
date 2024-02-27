@@ -67,7 +67,7 @@ class _GalleryManagerState extends State<GalleryManager> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Container(
+                    SizedBox(
                         height: 450,
                         width: 280,
                         //decoration: BoxDecoration(color: Colors.amberAccent),
@@ -125,13 +125,13 @@ class _GalleryManagerState extends State<GalleryManager> {
                   const SizedBox(
                     height: 50,
                   ),
-                  Container(
+                  SizedBox(
                     height: 300,
                     width: 300,
                       //decoration: BoxDecoration(color: Colors.blueAccent),
                     child: MasonryGridView.builder(
                               itemCount: photos.length,
-                              gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3
                                 ),
                                 crossAxisSpacing: 1,
@@ -148,8 +148,9 @@ class _GalleryManagerState extends State<GalleryManager> {
     setState(() {
       if (selectedItems.contains(path)) {
         selectedItems.remove(path);
-      } else
+      } else {
         selectedItems.add(path);
+      }
     });
 
   }
@@ -172,14 +173,14 @@ class _GalleryManagerState extends State<GalleryManager> {
             child: Container(
               height: 20,
               width: 20,
-              child: Visibility(
-                  visible: selectedItems.contains(photos[index].filePath),
-                  child: Icon(Icons.check_rounded, color: Colors.black,)
-              ),
               decoration: BoxDecoration(
                 color: selectedItems.contains(photos[index].filePath) ? Colors.blue : Colors.white,
                 shape: BoxShape.circle,
 
+              ),
+              child: Visibility(
+                  visible: selectedItems.contains(photos[index].filePath),
+                  child: const Icon(Icons.check_rounded, color: Colors.black,)
               ),
             ),
           ),
