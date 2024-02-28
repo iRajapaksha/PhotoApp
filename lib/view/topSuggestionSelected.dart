@@ -32,7 +32,8 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
         child: Column(
           children: [
             Container(
-              decoration: const BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 200, 200, 200)),
               height: 35,
               width: 500,
               child: Row(
@@ -53,7 +54,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 15,
             ),
             SizedBox(
               height: 300,
@@ -69,12 +70,19 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
             const Text(
               "Select a Caption",
               textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Roboto', // Example: custom font family
+                color: Colors.black,
+              ),
             ),
+
             const SizedBox(
               height: 10,
             ),
             SizedBox(
-              height: 150,
+              height: 160,
               child: ScrollSnapList(
                 itemBuilder: _buildListItem,
                 itemCount: captions.length,
@@ -88,17 +96,43 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                 scrollDirection: Axis.vertical,
               ),
             ),
-            Text(captions[selectedCaptionIndex].description),
+            Container(
+              margin: const EdgeInsets.only(top: 10.0), // Adjust margin to move the box down
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              width: 350,
+              decoration: BoxDecoration(
+                color: Colors.grey[200], // Example: Box color
+                borderRadius: BorderRadius.circular(10), // Example: Rounded corners
+              ),
+              child: Text(
+                captions[selectedCaptionIndex].description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Roboto', // Example: custom font family
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal, // Example: normal font weight
+                  fontStyle: FontStyle.italic, // Example: italic font style
+                  letterSpacing: 1.0, // Example: spacing between letters
+                  // Add more text style properties as needed
+                ),
+              ),
+            ),
+
+
+
+
             const SizedBox(
-              height: 15,
+              height: 5,
             ),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ShareOn(
-                        selectedPhoto : widget.selectedPhoto,
-                        selectedCaption: captions[selectedCaptionIndex],
-                      )));
+                      MaterialPageRoute(builder: (context) =>
+                          ShareOn(
+                            selectedPhoto: widget.selectedPhoto,
+                            selectedCaption: captions[selectedCaptionIndex],
+                          )));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
@@ -124,9 +158,8 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
       height: 60,
       width: 80,
       child: Card(
-        elevation: 20,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+        elevation: 35,
+        child: Center( // Center widget added here
           child: Text(
             caption.description,
             textAlign: TextAlign.center,

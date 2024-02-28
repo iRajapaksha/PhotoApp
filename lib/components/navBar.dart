@@ -11,9 +11,9 @@ Drawer endDrawer(BuildContext context) {
       children: [
         DrawerHeader(
             child: Image.asset(
-          "assets/icons/PhotoApp_LogoN.jpg",
-          fit: BoxFit.cover,
-        )),
+              "assets/icons/PhotoApp_LogoN.jpg",
+              fit: BoxFit.cover,
+            )),
         GestureDetector(
           onTap: () {
             Navigator.push(
@@ -35,8 +35,8 @@ Drawer endDrawer(BuildContext context) {
         GestureDetector(
           onTap: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context)=> const Options()));
+                context,
+                MaterialPageRoute(builder: (context)=> const Options()));
           },
           child: const ListTile(
             leading: Icon(Icons.settings),

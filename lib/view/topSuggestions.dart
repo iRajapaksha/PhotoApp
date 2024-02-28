@@ -55,7 +55,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
             height: 50,
           ),
           SizedBox(
-            height: 300,
+            height: 370,
             child: Center(
               child: ScrollSnapList(
                 itemBuilder: _buildListItem,
@@ -96,14 +96,40 @@ class _TopSuggestionsState extends State<TopSuggestions> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           ListTile(
-            title: Text("Taken On : ${photos[selectedPhotoIndex].dateTime}"),
+            contentPadding: const EdgeInsets.only(top: 0, bottom: 0.1), // Adjust the vertical padding
+            title: Center(
+              child: Text(
+                "Taken On: ${photos[selectedPhotoIndex].dateTime}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Roboto', // Example: custom font family
+                  color: Colors.black87,
+                ),
+              ),
+            ),
           ),
           ListTile(
-            title: Text("File Info : ${photos[selectedPhotoIndex].fileName}"),
-          )
+            contentPadding: const EdgeInsets.only(top: 0, bottom: 0.1), // Adjust the vertical padding
+            title: Center(
+              child: Text(
+                "File Info: ${photos[selectedPhotoIndex].fileName}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Roboto', // Example: custom font family
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+          ),
+
+
+
+
         ],
       ),
     );

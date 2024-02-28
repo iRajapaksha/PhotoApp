@@ -18,23 +18,25 @@ class Home extends StatelessWidget {
           children: [
             _buildMenuButton(
               context,
-              "Top Suggestions",
+              "Top\n Suggestions",
               Icons.thumb_up, // Icon for Top Suggestions button
                   () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const TopSuggestions()),
+                  MaterialPageRoute(
+                      builder: (context) => const TopSuggestions()),
                 );
               },
             ),
             _buildMenuButton(
               context,
-              "Gallery Manager",
+              "Gallery\n Manager",
               Icons.photo_album, // Icon for Gallery Manager button
                   () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const GalleryManager()),
+                  MaterialPageRoute(
+                      builder: (context) => const GalleryManager()),
                 );
               },
             ),
@@ -55,35 +57,64 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuButton(BuildContext context, String text, IconData iconData, VoidCallback onPressed) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        primary: Colors.blueAccent,
-        minimumSize: const Size(350, 200),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+  Widget _buildMenuButton(BuildContext context, String text, IconData iconData,
+      VoidCallback onPressed) {
+    return Container(
+      width: 350,
+      height: 200,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: LinearGradient(
+          colors: [Colors.blue.shade600, Colors.blue.shade800],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          stops: const [0.4, 0.7],
         ),
-        elevation: 5,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            iconData,
-            size: 80, // Adjust the size of the icon as needed
-            color: Colors.white38,
-          ),
-          const SizedBox(height: 15), // Add some spacing between the icon and text
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-            ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 10,
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(5),
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  text,
+                  textAlign: TextAlign.justify,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    // Example: bold font weight
+                    fontStyle: FontStyle.italic,
+                    // Example: italic font style
+                    fontFamily: 'Roboto',
+                    // Example: custom font family
+                    letterSpacing: 1.5, // Example: spacing between letters
+                    // Add more text style properties as needed
+                  ),
+                ),
+                Icon(
+                  iconData,
+                  size: 80, // Adjust the size of the icon as needed
+                  color: Colors.black54,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
