@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:photo_app/components/navBar.dart';
-import 'package:photo_app/models/Photo.dart';
-import 'package:photo_app/view/topSuggestionSelected.dart';
+import 'package:photo_app/components/nav_bar.dart';
+import 'package:photo_app/models/photo.dart';
+import 'package:photo_app/view/top_suggestion_selected.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class TopSuggestions extends StatefulWidget {
@@ -55,7 +55,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
             height: 50,
           ),
           SizedBox(
-            height: 370,
+            height: 350,
             child: Center(
               child: ScrollSnapList(
                 itemBuilder: _buildListItem,

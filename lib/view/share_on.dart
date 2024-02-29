@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:photo_app/components/navBar.dart';
-import 'package:photo_app/models/Caption.dart';
-import 'package:photo_app/models/Photo.dart';
+import 'package:photo_app/components/nav_bar.dart';
+import 'package:photo_app/models/caption.dart';
+import 'package:photo_app/models/photo.dart';
 
 class ShareOn extends StatelessWidget {
   final Photo selectedPhoto;
@@ -45,7 +45,7 @@ class ShareOn extends StatelessWidget {
                   height: 300,
                   width: 300,
                   decoration: const BoxDecoration(
-                    color: Colors.amberAccent
+                    color: Colors.blue
                   ),
                 ),
                 const SizedBox(height: 50,),
@@ -54,7 +54,7 @@ class ShareOn extends StatelessWidget {
                   width: 300,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 181, 181, 181),
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

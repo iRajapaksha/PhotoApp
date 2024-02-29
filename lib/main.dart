@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:photo_app/view/Welcome.view.dart';
+import 'package:photo_app/view/welcome_view.dart';
 
 
 void main() {

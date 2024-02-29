@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:photo_app/components/navBar.dart';
-import 'package:photo_app/models/Caption.dart';
-import 'package:photo_app/models/Photo.dart';
-import 'package:photo_app/view/shareOn.dart';
+import 'package:photo_app/components/nav_bar.dart';
+import 'package:photo_app/models/caption.dart';
+import 'package:photo_app/models/photo.dart';
+import 'package:photo_app/view/share_on.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class TopSuggestionSelected extends StatefulWidget {
   final Photo selectedPhoto;
-  const TopSuggestionSelected({Key? key, required this.selectedPhoto}) : super(key: key);
+  const TopSuggestionSelected({super.key, required this.selectedPhoto});
 
   @override
   State<TopSuggestionSelected> createState() => _TopSuggestionSelectedState();
