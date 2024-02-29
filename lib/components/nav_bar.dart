@@ -11,8 +11,8 @@ Drawer endDrawer(BuildContext context) {
       children: [
         DrawerHeader(
             child: Image.asset(
-              "assets/icons/PhotoApp_LogoN.jpg",
-              fit: BoxFit.cover,
+              "assets/icons/PhotoApp_Logo-removebg-preview.png",
+              fit: BoxFit.contain,
             )),
         GestureDetector(
           onTap: () {

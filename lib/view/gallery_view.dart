@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:photo_app/view/topSuggestionSelected.dart';
-import '../models/Photo.dart';
+import 'package:photo_app/view/top_suggestion_selected.dart';
+import '../models/photo.dart';
 
 class GalleryView extends StatefulWidget {
-  const GalleryView({Key? key}) : super(key: key);
+  const GalleryView({super.key});
 
   @override
   State<GalleryView> createState() => _GalleryViewState();
@@ -97,11 +96,11 @@ class ImagePreviewScreen extends StatelessWidget {
   final List<Photo> photos;
 
   const ImagePreviewScreen({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.selectedPhotoIndex,
     required this.photos,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +133,7 @@ class ImagePreviewScreen extends StatelessWidget {
                           );
                         }
                       },
-                      child: const Text('Share'),
+                      child: const Text('share'),
                     ),
                   ),
                 ),
