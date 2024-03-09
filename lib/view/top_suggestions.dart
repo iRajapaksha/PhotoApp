@@ -7,14 +7,12 @@ import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class TopSuggestions extends StatefulWidget {
   const TopSuggestions({super.key});
-
   @override
   State<TopSuggestions> createState() => _TopSuggestionsState();
 }
 
 class _TopSuggestionsState extends State<TopSuggestions> {
   int selectedPhotoIndex = 0;
-
   List<Photo> photos = [];
 
   void _getInitInfo() {
@@ -47,7 +45,14 @@ class _TopSuggestionsState extends State<TopSuggestions> {
                 const SizedBox(
                   width: 8,
                 ),
-                const Text("Top Suggestions"),
+                const Text(
+                  "Top Suggestions",
+                  style: TextStyle(
+                    color: Colors.black, // Change font color to white
+                    fontSize: 16, // Optionally, adjust font size
+                  ),
+                ),
+
               ],
             ),
           ),
@@ -83,7 +88,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
                           selectedPhoto: photos[selectedPhotoIndex])));
             },
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.blueAccent,
                 minimumSize: const Size(150, 40),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20))),
@@ -126,10 +131,6 @@ class _TopSuggestionsState extends State<TopSuggestions> {
               ),
             ),
           ),
-
-
-
-
         ],
       ),
     );

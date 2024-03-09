@@ -33,7 +33,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
           children: [
             Container(
               decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 200, 200, 200)),
+              color: Color.fromARGB(255, 200, 200, 200)),
               height: 35,
               width: 500,
               child: Row(
@@ -49,7 +49,13 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                   const SizedBox(
                     width: 8,
                   ),
-                  const Text("Sharing Content"),
+                  const Text(
+                    "Sharing content",
+                    style: TextStyle(
+                      color: Colors.black, // Change font color to white
+                      fontSize: 16, // Optionally, adjust font size
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -98,10 +104,10 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
             ),
             Container(
               margin: const EdgeInsets.only(top: 10.0), // Adjust margin to move the box down
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
               width: 350,
               decoration: BoxDecoration(
-                color: Colors.grey[200], // Example: Box color
+                color: Colors.black12, // Example: Box color
                 borderRadius: BorderRadius.circular(10), // Example: Rounded corners
               ),
               child: Text(
@@ -135,7 +141,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                           )));
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.blueAccent,
                     minimumSize: const Size(120, 40),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),
