@@ -52,14 +52,19 @@ class _GalleryManagerState extends State<GalleryManager> {
                 ],
               ),
             ),
-            const TabBar(tabs: [
-              Tab(
-                text: "Duplicate",
-              ),
-              Tab(
-                text: "Defected",
-              ),
-            ]),
+            const TabBar(
+              indicatorColor: Colors.white, // Change the indicator color here
+              labelColor: Colors.blueAccent, // Change the selected tab text color here
+              tabs: [
+                Tab(
+                  text: "Duplicate",
+                ),
+                Tab(
+                  text: "Defected",
+                ),
+              ],
+            ),
+
             Expanded(
               child: TabBarView(children: [
                 Column(
