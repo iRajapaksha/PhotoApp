@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:photo_app/view/gallery_manager.dart';
 import 'package:photo_app/view/top_suggestions.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key});
+  const Home({Key? key}) : super(key: key); // Remove the redundant 'key' parameter
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +14,6 @@ class Home extends StatelessWidget {
       endDrawer: endDrawer(context),
       body: Stack(
         children: [
-          // Background image
-          // Image.asset(
-          //   'assets/icons/viktor-zhulin-c9NpkmAwBzc-unsplash.jpg', // Adjust the path to your image
-          //   fit: BoxFit.fill,
-          //   width: double.infinity,
-          //   height: double.infinity,
-          // ),
-          // Container with buttons
           Align(
             alignment: Alignment.bottomCenter,
             child: ClipRRect(
@@ -32,7 +23,7 @@ class Home extends StatelessWidget {
               ),
               child: Container(
                 decoration: const BoxDecoration(
-                  color: Colors.blueAccent// Add opacity to the color for a semi-transparent background
+                    color: Colors.blueAccent
                 ),
                 width: 450,
                 height: 400, // Adjust height here
@@ -94,8 +85,8 @@ class Home extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: Colors.white,
-          minimumSize: const Size(100, 80),
+          backgroundColor: Colors.white,
+          minimumSize: const Size(100, 100),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
             side: const BorderSide(color: Colors.black), // Add black margin
