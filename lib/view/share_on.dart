@@ -36,50 +36,69 @@ class ShareOn extends StatelessWidget {
                   width: 8,
                 ),
                 const Text("Top Suggestions"),
-            
               ],
             ),
           ),
-          const SizedBox(height: 50,),
+          const SizedBox(
+            height: 50,
+          ),
           Container(
-                  height: 300,
-                  width: 300,
-                  decoration: const BoxDecoration(
-                    color: Colors.blue
-                  ),
+            height: 300,
+            width: 300,
+            decoration: const BoxDecoration(color: Colors.blue),
+            child: Image.asset(
+              selectedPhoto.filePath,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Container(
+            width: 300,
+            height: 50,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.grey,
+            ),
+            child: Text(
+              selectedCaption.description,
+              style: TextStyle(),
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            height: 300,
+            width: 300,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 181, 181, 181),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(Icons.facebook),
+                    Icon(Icons.email),
+                    Icon(Icons.call),
+                  ],
                 ),
-                const SizedBox(height: 50,),
-          Container(
-                  height: 200,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 181, 181, 181),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          
-                          Icon(Icons.facebook),
-                          Icon(Icons.email),
-                          Icon(Icons.call),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                        children: [
-                          Icon(Icons.facebook),
-                          Icon(Icons.email),
-                          Icon(Icons.call),
-                        ],
-                      )
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(Icons.facebook),
+                    Icon(Icons.email),
+                    Icon(Icons.call),
+                  ],
                 )
+              ],
+            ),
+          )
         ],
       ),
     );
