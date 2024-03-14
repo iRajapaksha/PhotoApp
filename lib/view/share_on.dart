@@ -64,10 +64,10 @@ class ShareOn extends StatelessWidget {
             ),
             child: Text(
               selectedCaption.description,
-              style: TextStyle(),
+              style: const TextStyle(),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Container(

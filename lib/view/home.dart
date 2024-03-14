@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:photo_app/view/gallery_manager.dart';
 import 'package:photo_app/view/top_suggestions.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key});
+  const Home({super.key, Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +93,7 @@ class Home extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: Colors.white,
+          backgroundColor: Colors.white,
           minimumSize: const Size(100, 80),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
