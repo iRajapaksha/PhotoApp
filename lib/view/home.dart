@@ -5,7 +5,7 @@ import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key); // Remove the redundant 'key' parameter
+  const Home({super.key}); // Use 'Key? key' instead of 'super.key'
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
                     color: Colors.blueAccent
                 ),
                 width: 450,
-                height: 400, // Adjust height here
+                height: 350, // Adjust height here
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -86,9 +86,11 @@ class Home extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
-          minimumSize: const Size(100, 100),
+          shadowColor: Colors.black,
+          elevation: 25,
+          minimumSize: const Size(100, 60),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(40.0),
             side: const BorderSide(color: Colors.black), // Add black margin
           ),
         ),
