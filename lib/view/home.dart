@@ -5,7 +5,7 @@ import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key}); // Use 'Key? key' instead of 'super.key'
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +14,13 @@ class Home extends StatelessWidget {
       endDrawer: endDrawer(context),
       body: Stack(
         children: [
+          // Background image
+          Positioned.fill(
+            child: Image.asset(
+              'assets/icons/carolina-nichitin-_RiFvXEIOPk-unsplash.jpg', // Replace 'assets/background_image.jpg' with your image path
+              fit: BoxFit.cover,
+            ),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: ClipRRect(
@@ -23,7 +30,7 @@ class Home extends StatelessWidget {
               ),
               child: Container(
                 decoration: const BoxDecoration(
-                    color: Colors.blueAccent
+                  color: Colors.transparent,
                 ),
                 width: 450,
                 height: 350, // Adjust height here
@@ -85,12 +92,12 @@ class Home extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.white54,
           shadowColor: Colors.black,
-          elevation: 25,
+          elevation: 15,
           minimumSize: const Size(100, 60),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40.0),
+            borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(color: Colors.black), // Add black margin
           ),
         ),
@@ -115,5 +122,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
 }
