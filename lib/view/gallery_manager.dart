@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:photo_app/components/heading.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/models/photo.dart';
 
@@ -15,6 +16,7 @@ class GalleryManager extends StatefulWidget {
 class _GalleryManagerState extends State<GalleryManager> {
   List<Photo> photos = [];
 
+
   void getInitInfo() {
     photos = Photo.getPhotos();
   }
@@ -22,6 +24,8 @@ class _GalleryManagerState extends State<GalleryManager> {
   HashSet selectedItems =  HashSet();
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     getInitInfo();
     return DefaultTabController(
       length: 2,
@@ -30,28 +34,7 @@ class _GalleryManagerState extends State<GalleryManager> {
         endDrawer: endDrawer(context),
         body: Column(
           children: [
-            Container(
-              decoration:
-                  const BoxDecoration(color: Color.fromARGB(255, 200, 200, 200)),
-              height: 35,
-              width: 500,
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: SvgPicture.asset("assets/icons/arrow_left.svg")),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  const Text("Gallery Manager"),
-                ],
-              ),
-            ),
+            heading(screenWidth, context, 'Gallery Manager'),
             const TabBar(
               indicatorColor: Colors.white, // Change the indicator color here
               labelColor: Colors.blueAccent, // Change the selected tab text color here

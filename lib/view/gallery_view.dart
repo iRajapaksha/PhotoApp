@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:photo_app/view/top_suggestion_selected.dart';
+import 'package:photo_app/view/caption_selection.dart';
 import '../models/photo.dart';
 
 class GalleryView extends StatefulWidget {

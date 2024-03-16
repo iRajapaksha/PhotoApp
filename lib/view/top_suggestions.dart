@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_app/components/heading.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/models/photo.dart';
-import 'package:photo_app/view/top_suggestion_selected.dart';
+import 'package:photo_app/view/caption_selection.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class TopSuggestions extends StatefulWidget {
