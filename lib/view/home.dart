@@ -5,21 +5,24 @@ import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
 
 class Home extends StatelessWidget {
-
-
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: appBar(),
       endDrawer: endDrawer(context),
       body: Stack(
         children: [
+
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/icons/carolina-nichitin-_RiFvXEIOPk-unsplash.jpg', // Replace 'assets/background_image.jpg' with your image path
+              'assets/icons/carolina-nichitin-_RiFvXEIOPk-unsplash.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -34,8 +37,8 @@ class Home extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: Colors.transparent,
                 ),
-                width: 450,
-                height: 350, // Adjust height here
+                width: screenWidth * 0.9,
+                height: screenHeight * 0.5,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -43,7 +46,7 @@ class Home extends StatelessWidget {
                       context,
                       "Top Suggestions",
                       Icons.thumb_up,
-                          () {
+                      () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -55,8 +58,8 @@ class Home extends StatelessWidget {
                     _buildMenuButton(
                       context,
                       "Gallery Manager",
-                      Icons.photo_album, // Icon for Gallery Manager button
-                          () {
+                      Icons.photo_album,
+                      () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -69,7 +72,7 @@ class Home extends StatelessWidget {
                       context,
                       "Gallery",
                       Icons.image,
-                          () {
+                      () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -88,18 +91,17 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuButton(BuildContext context, String text, IconData iconData, VoidCallback onPressed) {
+  Widget _buildMenuButton(
+      BuildContext context, String text, IconData iconData, VoidCallback onPressed) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-
           backgroundColor: Colors.white54,
           shadowColor: Colors.black,
           elevation: 15,
           minimumSize: const Size(100, 60),
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(color: Colors.black), // Add black margin
