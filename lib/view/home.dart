@@ -5,7 +5,9 @@ import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key, Key? key});
+
+
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +17,12 @@ class Home extends StatelessWidget {
       body: Stack(
         children: [
           // Background image
-          // Image.asset(
-          //   'assets/icons/viktor-zhulin-c9NpkmAwBzc-unsplash.jpg', // Adjust the path to your image
-          //   fit: BoxFit.fill,
-          //   width: double.infinity,
-          //   height: double.infinity,
-          // ),
-          // Container with buttons
+          Positioned.fill(
+            child: Image.asset(
+              'assets/icons/carolina-nichitin-_RiFvXEIOPk-unsplash.jpg', // Replace 'assets/background_image.jpg' with your image path
+              fit: BoxFit.cover,
+            ),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: ClipRRect(
@@ -31,10 +32,10 @@ class Home extends StatelessWidget {
               ),
               child: Container(
                 decoration: const BoxDecoration(
-                  color: Colors.blueAccent// Add opacity to the color for a semi-transparent background
+                  color: Colors.transparent,
                 ),
                 width: 450,
-                height: 400, // Adjust height here
+                height: 350, // Adjust height here
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -93,10 +94,14 @@ class Home extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          minimumSize: const Size(100, 80),
+
+          backgroundColor: Colors.white54,
+          shadowColor: Colors.black,
+          elevation: 15,
+          minimumSize: const Size(100, 60),
+
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(color: Colors.black), // Add black margin
           ),
         ),
@@ -121,5 +126,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
 }

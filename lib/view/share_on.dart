@@ -40,26 +40,28 @@ class ShareOn extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 50,
+            height: 20,
           ),
           Container(
             height: 300,
             width: 300,
-            decoration: const BoxDecoration(color: Colors.blue),
+            decoration: const BoxDecoration(
+                color: Colors.blue,
+            ),
             child: Image.asset(
               selectedPhoto.filePath,
               fit: BoxFit.cover,
             ),
           ),
           const SizedBox(
-            height: 50,
+            height: 30,
           ),
           Container(
-            width: 300,
+            width: 370,
             height: 50,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(15),
               color: Colors.grey,
             ),
             child: Text(
@@ -71,8 +73,8 @@ class ShareOn extends StatelessWidget {
             height: 30,
           ),
           Container(
-            height: 300,
-            width: 300,
+            height: 160,
+            width: 250,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 181, 181, 181),
               borderRadius: BorderRadius.circular(20),
