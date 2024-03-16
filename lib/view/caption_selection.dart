@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:photo_app/components/button.dart';
 import 'package:photo_app/components/heading.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/models/caption.dart';
@@ -28,6 +26,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
   void _getInfo() {
     captions = Caption.getCaptions();
     caption = captions[selectedCaptionIndex].description;
+    //textController = TextEditingController(text: caption);
     //editedCaption = textController.text;
   }
 
@@ -42,6 +41,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
     _getInfo();
     return Scaffold(
       appBar: appBar(),
@@ -89,8 +89,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                             controller: textController,
                             onChanged: (value) {
                               setState(() {
-                                editedCaption = value;
-                                caption = editedCaption;
+                                caption = value;
                               });
                             },
                           ),
@@ -115,32 +114,25 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
             const SizedBox(
               height: 5,
             ),
-            ElevatedButton(
+            Button(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ShareOn(
-                                selectedPhoto: widget.selectedPhoto,
-                                selectedCaption: captions[selectedCaptionIndex],
-                              )));
+                  onPressed(context);
                 },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    minimumSize: const Size(120, 40),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                child: const Text(
-                  "Share",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ))
+                title: 'Share')
           ],
         ),
       ),
     );
+  }
+
+  Future<dynamic> onPressed(BuildContext context) {
+    return Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ShareOn(
+                  selectedPhoto: widget.selectedPhoto,
+                  selectedCaption: captions[selectedCaptionIndex],
+                )));
   }
 
   SizedBox _scrollSnapList(double screenHeight) {

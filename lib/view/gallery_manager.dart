@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_app/components/heading.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/models/photo.dart';

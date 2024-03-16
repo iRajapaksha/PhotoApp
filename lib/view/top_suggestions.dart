@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:photo_app/components/button.dart';
 import 'package:photo_app/components/heading.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/models/photo.dart';
@@ -29,7 +30,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    // final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: appBar(),
       endDrawer: endDrawer(context),
@@ -39,10 +40,9 @@ class _TopSuggestionsState extends State<TopSuggestions> {
           const SizedBox(height: 30),
           _scrollSnapList(screenWidth),
           const SizedBox(height: 10),
-          _selectButton(context),
+          Button(onPressed: () {onPressed(context);},title: 'Select',),
           const SizedBox(height: 10),
           _imageDescription(),
-          
         ],
       ),
     );
@@ -50,8 +50,8 @@ class _TopSuggestionsState extends State<TopSuggestions> {
 
   Column _imageDescription() {
     return Column(
-          children: [
-              ListTile(
+      children: [
+        ListTile(
           contentPadding: const EdgeInsets.symmetric(vertical: 4),
           title: Text(
             "Taken On: ${photos[selectedPhotoIndex].dateTime}",
@@ -75,56 +75,38 @@ class _TopSuggestionsState extends State<TopSuggestions> {
             ),
           ),
         ),
-          ],
-        );
+      ],
+    );
   }
 
-  ElevatedButton _selectButton(BuildContext context) {
-    return ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TopSuggestionSelected(
-                  selectedPhoto: photos[selectedPhotoIndex],
-                ),
-              ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent,
-            minimumSize: const Size(150, 40),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-          child: const Text(
-            "Select",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
-          ),
-        );
+  Future<dynamic> onPressed(BuildContext context) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TopSuggestionSelected(
+          selectedPhoto: photos[selectedPhotoIndex],
+        ),
+      ),
+    );
   }
 
   Expanded _scrollSnapList(double screenWidth) {
     return Expanded(
-          child: Center(
-            child: ScrollSnapList(
-              itemBuilder: _buildListItem,
-              itemCount: photos.length,
-              itemSize: screenWidth * 0.6 ,
-              onItemFocus: (index) {
-                setState(() {
-                  selectedPhotoIndex = index;
-                });
-              },
-              dynamicItemSize: true,
-              duration: 10,
-            ),
-          ),
-        );
+      child: Center(
+        child: ScrollSnapList(
+          itemBuilder: _buildListItem,
+          itemCount: photos.length,
+          itemSize: screenWidth * 0.6,
+          onItemFocus: (index) {
+            setState(() {
+              selectedPhotoIndex = index;
+            });
+          },
+          dynamicItemSize: true,
+          duration: 10,
+        ),
+      ),
+    );
   }
 
   Widget _buildListItem(BuildContext context, int index) {
@@ -133,8 +115,8 @@ class _TopSuggestionsState extends State<TopSuggestions> {
     final photo = photos[index];
     final isFocused = index == selectedPhotoIndex;
     return SizedBox(
-      width: screenWidth*0.6,
-      height: screenHeight*0.8,
+      width: screenWidth * 0.6,
+      height: screenHeight * 0.8,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
