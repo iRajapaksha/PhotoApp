@@ -33,7 +33,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
           children: [
             Container(
               decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 200, 200, 200)),
+                  color: Color.fromARGB(255, 200, 200, 200)),
               height: 35,
               width: 500,
               child: Row(
@@ -83,7 +83,6 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                 color: Colors.black,
               ),
             ),
-
             const SizedBox(
               height: 10,
             ),
@@ -103,12 +102,14 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 10.0), // Adjust margin to move the box down
+              margin: const EdgeInsets.only(
+                  top: 10.0), // Adjust margin to move the box down
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               width: 350,
               decoration: BoxDecoration(
                 color: Colors.black12, // Example: Box color
-                borderRadius: BorderRadius.circular(10), // Example: Rounded corners
+                borderRadius:
+                    BorderRadius.circular(10), // Example: Rounded corners
               ),
               child: Text(
                 captions[selectedCaptionIndex].description,
@@ -124,21 +125,18 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
                 ),
               ),
             ),
-
-
-
-
             const SizedBox(
               height: 5,
             ),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>
-                          ShareOn(
-                            selectedPhoto: widget.selectedPhoto,
-                            selectedCaption: captions[selectedCaptionIndex],
-                          )));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShareOn(
+                                selectedPhoto: widget.selectedPhoto,
+                                selectedCaption: captions[selectedCaptionIndex],
+                              )));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
@@ -160,12 +158,22 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
 
   Widget _buildListItem(BuildContext context, int index) {
     Caption caption = captions[index];
+    bool isFocused = index == selectedCaptionIndex;
     return SizedBox(
       height: 60,
       width: 80,
       child: Card(
-        elevation: 35,
-        child: Center( // Center widget added here
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: isFocused ? Colors.lightBlue : Colors.transparent,
+            width: 3
+
+          )
+        ),
+        elevation: isFocused ? 15 : 5,
+        child: Center(
+          // Center widget added here
           child: Text(
             caption.description,
             textAlign: TextAlign.center,

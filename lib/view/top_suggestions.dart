@@ -52,7 +52,6 @@ class _TopSuggestionsState extends State<TopSuggestions> {
                     fontSize: 16, // Optionally, adjust font size
                   ),
                 ),
-
               ],
             ),
           ),
@@ -104,7 +103,8 @@ class _TopSuggestionsState extends State<TopSuggestions> {
             height: 10,
           ),
           ListTile(
-            contentPadding: const EdgeInsets.only(top: 0, bottom: 0.1), // Adjust the vertical padding
+            contentPadding: const EdgeInsets.only(
+                top: 0, bottom: 0.1), // Adjust the vertical padding
             title: Center(
               child: Text(
                 "Taken On: ${photos[selectedPhotoIndex].dateTime}",
@@ -118,7 +118,8 @@ class _TopSuggestionsState extends State<TopSuggestions> {
             ),
           ),
           ListTile(
-            contentPadding: const EdgeInsets.only(top: 0, bottom: 0.1), // Adjust the vertical padding
+            contentPadding: const EdgeInsets.only(
+                top: 0, bottom: 0.1), // Adjust the vertical padding
             title: Center(
               child: Text(
                 "File Info: ${photos[selectedPhotoIndex].fileName}",
@@ -138,11 +139,19 @@ class _TopSuggestionsState extends State<TopSuggestions> {
 
   Widget _buildListItem(BuildContext context, int index) {
     Photo photo = photos[index];
+    bool isFocused = index == selectedPhotoIndex;
     return SizedBox(
       width: 200,
       height: 300,
       child: Card(
-        elevation: index == selectedPhotoIndex ? 15 : 12,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: isFocused ? Colors.lightBlue : Colors.transparent,
+            width: 3,
+          )
+        ),
+        elevation: isFocused ? 15 : 5,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.asset(
