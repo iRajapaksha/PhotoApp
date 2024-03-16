@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/home.dart';
 import 'package:photo_app/view/options.dart';
+import 'package:photo_app/view/contact_us.dart';
 
 AppBar appBar() =>
     AppBar(automaticallyImplyLeading: false, title: const Text("PhotoApp"));
@@ -59,9 +60,15 @@ Drawer endDrawer(BuildContext context) {
             title: Text("Options"),
           ),
         ),
-        const ListTile(
-          leading: Icon(Icons.contact_emergency),
-          title: Text("Contact Us"),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ContactUsApp()));
+          },
+          child: const ListTile(
+            leading: Icon(Icons.contact_emergency),
+            title: Text("Contact Us"),
+          ),
         ),
       ],
     ),
