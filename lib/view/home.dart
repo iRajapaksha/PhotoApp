@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/gallery_manager.dart';
 import 'package:photo_app/view/top_suggestions.dart';
+// import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
           // Background image
           Positioned.fill(
             child: Image.asset(
-              'assets/icons/carolina-nichitin-_RiFvXEIOPk-unsplash.jpg',
+              'assets/icons/background.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -37,7 +37,7 @@ class Home extends StatelessWidget {
                   color: Colors.transparent,
                 ),
                 width: screenWidth * 0.9,
-                height: screenHeight * 0.5,
+                height: screenHeight * 1,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
                       context,
                       "Top Suggestions",
                       Icons.thumb_up,
-                      () {
+                          () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -58,7 +58,7 @@ class Home extends StatelessWidget {
                       context,
                       "Gallery Manager",
                       Icons.photo_album,
-                      () {
+                          () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -71,21 +71,8 @@ class Home extends StatelessWidget {
                       context,
                       "Gallery",
                       Icons.image,
-                      () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const GalleryView(),
-                        //   ),
-                        // );
-                      //  onPressedgallery();
-                        PhotoManager.requestPermissionExtend().then((PermissionState state) {
-      if (state.isAuth) {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_)=> const GalleryView())
-        );
-      }
-    });
+                          () {
+                        onPressedGallery(context);
                       },
                     ),
                   ],
@@ -98,10 +85,14 @@ class Home extends StatelessWidget {
     );
   }
 
-  void onPressedgallery() {
-    // print("gallery function works");
-
-    
+  void onPressedGallery(BuildContext context) {
+    // PhotoManager.requestPermissionExtend().then((PermissionState state) {
+    // if (state.isAuth) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const GalleryView()),
+    );
+    // }
+    // });
   }
 
   Widget _buildMenuButton(BuildContext context, String text, IconData iconData,
@@ -114,7 +105,7 @@ class Home extends StatelessWidget {
           backgroundColor: Colors.white54,
           shadowColor: Colors.black,
           elevation: 15,
-          minimumSize: const Size(100, 60),
+          minimumSize: const Size(100, 120),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(color: Colors.black), // Add black margin
@@ -133,7 +124,7 @@ class Home extends StatelessWidget {
             ),
             Icon(
               iconData,
-              size: 30,
+              size: 20,
               color: Colors.black,
             ),
           ],
