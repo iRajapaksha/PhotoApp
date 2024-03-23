@@ -7,7 +7,7 @@ import 'package:photo_app/view/caption_selection.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 
 class TopSuggestions extends StatefulWidget {
-  const TopSuggestions({Key? key}) : super(key: key);
+  const TopSuggestions({super.key});
 
   @override
   State<TopSuggestions> createState() => _TopSuggestionsState();

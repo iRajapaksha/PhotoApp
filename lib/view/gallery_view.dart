@@ -1,11 +1,6 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:photo_app/components/asset_thumbnail.dart';
-import 'package:photo_app/components/heading.dart';
-import 'package:photo_app/components/nav_bar.dart';
-import 'package:photo_manager/photo_manager.dart';
+import 'package:photo_app/view/caption_selection.dart';
+import '../models/photo.dart';
 
 class GalleryView extends StatefulWidget {
   const GalleryView({super.key});
@@ -15,6 +10,7 @@ class GalleryView extends StatefulWidget {
 }
 
 class _GalleryViewState extends State<GalleryView> {
+
   List<AssetEntity> assets = [];
 
   Future<void> _fetchAssets() async {
@@ -27,15 +23,18 @@ class _GalleryViewState extends State<GalleryView> {
 
   }
 
+
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _fetchAssets();
+    _getInitInfo();
+  }
+
+  void _getInitInfo() {
+    photos = Photo.getPhotos();
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
 
       appBar: appBar(),
@@ -58,6 +57,7 @@ class _GalleryViewState extends State<GalleryView> {
                 }),
           )
         ],
+
       ),
     );
   }

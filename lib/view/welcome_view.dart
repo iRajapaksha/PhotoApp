@@ -41,6 +41,7 @@ class _BackgroundTrianglePainter extends CustomPainter {
         Offset(width * 0, height * 1),
         Offset(width * 0, height * 0),
       ]
+
     ];
 
     final List<double> opacities = [0.4, 0.5, 0.2]; // Define opacity levels for each triangle
@@ -77,29 +78,29 @@ class WelcomeView extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/icons/douglas-bagg-lcp7Krw5uTA-unsplash.jpg'),
+                image: AssetImage('assets/icons/PhotoApp_LogoN.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          const BackgroundTriangles(key: Key('background_triangles')),
+          // const BackgroundTriangles(key: Key('background_triangles')),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 70.0), // Added SizedBox to push the text lower
+              const SizedBox(height: 100.0), // Added SizedBox to push the text lower
               Text(
                 'PhotoApp',
                 style: TextStyle(
-                  fontSize: 60,
+                  fontSize: 70,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Colors.white,
                   letterSpacing: 1.0,
                   shadows: [
                     Shadow(
                       color: Colors.black.withOpacity(0.7),
                       offset: const Offset(2, 2),
-                      blurRadius: 6,
+                      blurRadius:  10,
                     ),
                   ],
                 ),
@@ -111,11 +112,12 @@ class WelcomeView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Home()),
+
                     );
                   },
                   style: ElevatedButton.styleFrom(
 
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 40.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
