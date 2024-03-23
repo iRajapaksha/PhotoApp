@@ -3,13 +3,13 @@ import 'package:photo_app/view/gallery_manager.dart';
 import 'package:photo_app/view/top_suggestions.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -18,7 +18,6 @@ class Home extends StatelessWidget {
       endDrawer: endDrawer(context),
       body: Stack(
         children: [
-
           // Background image
           Positioned.fill(
             child: Image.asset(
@@ -73,12 +72,20 @@ class Home extends StatelessWidget {
                       "Gallery",
                       Icons.image,
                       () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const GalleryView(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const GalleryView(),
+                        //   ),
+                        // );
+                      //  onPressedgallery();
+                        PhotoManager.requestPermissionExtend().then((PermissionState state) {
+      if (state.isAuth) {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_)=> const GalleryView())
+        );
+      }
+    });
                       },
                     ),
                   ],
@@ -91,8 +98,14 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuButton(
-      BuildContext context, String text, IconData iconData, VoidCallback onPressed) {
+  void onPressedgallery() {
+    // print("gallery function works");
+
+    
+  }
+
+  Widget _buildMenuButton(BuildContext context, String text, IconData iconData,
+      VoidCallback onPressed) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
       child: ElevatedButton(
