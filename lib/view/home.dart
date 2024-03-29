@@ -124,7 +124,7 @@ class Home extends StatelessWidget {
             ),
             Icon(
               iconData,
-              size: 20,
+              size: 35,
               color: Colors.black,
             ),
           ],
