@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'package:photo_app/view/caption_selection.dart';
+import 'package:photo_app/components/asset_thumbnail.dart';
+import 'package:photo_app/components/heading.dart';
+import 'package:photo_app/components/nav_bar.dart';
+import 'package:photo_app/view/caption_selection.dart';
 import 'package:photo_manager/photo_manager.dart';
-import '../components/asset_thumbnail.dart';
-import '../components/heading.dart';
-import '../components/nav_bar.dart';
 import '../models/photo.dart';
 
 class GalleryView extends StatefulWidget {
@@ -20,29 +20,24 @@ class _GalleryViewState extends State<GalleryView> {
   double screenWidth = 0; // Define screenWidth variable
 
   Future<void> _fetchAssets() async {
-    final allAssets = await PhotoManager.getAssetListRange(start: 0, end: 100000);
+    final allAssets =
+        await PhotoManager.getAssetListRange(start: 0, end: 100000);
     setState(() {
-      assets = allAssets.where((asset) => asset.type == AssetType.image).toList();
+      assets =
+          allAssets.where((asset) => asset.type == AssetType.image).toList();
     });
   }
 
-  @override
   void initState() {
     super.initState();
-    _fetchAssets();
-    _getInitInfo();
-  }
-
-  void _getInitInfo() {
-    photos = Photo.getPhotos();
   }
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width; // Get screenWidth
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: appBar(), // Implement appBar function
-      endDrawer: endDrawer(context), // Implement endDrawer function
+      appBar: appBar(),
+      endDrawer: endDrawer(context),
       body: Column(
         children: [
           heading(screenWidth, context, "Gallery"),

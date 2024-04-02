@@ -49,37 +49,11 @@ class _GalleryManagerState extends State<GalleryManager> {
 
             Expanded(
               child: TabBarView(children: [
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    SizedBox(
-                        height: 450,
-                        width: 280,
-                        //decoration: BoxDecoration(color: Colors.amberAccent),
-
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 200,
-                              decoration:
-                                  const BoxDecoration(color: Colors.amberAccent),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            _duplicatePhotos()
-                          ],
-                        ))
-                  ],
-                ),
+                _duplicatePhotos(),
                 _defectedPhotos()
               ]),
             ),
-            ElevatedButton(
-                onPressed: () {},
-                child: Text("Delete ${selectedItems.length} images")),
+            
             const SizedBox(
               height: 30,
             )
@@ -89,22 +63,49 @@ class _GalleryManagerState extends State<GalleryManager> {
     );
   }
 
-  Expanded _duplicatePhotos() {
-    return Expanded(
-                            child: GridView.builder(
-                              itemCount: photos.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 5,
-                                  
-                                ),
-                                itemBuilder: (context, index) {
-                                  return photoContainer(context, index);
-                                }),
-                          );
+  Column _duplicatePhotos() {
+    return Column(
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                      height: 450,
+                      width: 280,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 200,
+                            decoration:
+                                const BoxDecoration(color: Color.fromARGB(255, 64, 255, 109)),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Expanded(
+                          child: GridView.builder(
+                            itemCount: photos.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5,
+                                
+                              ),
+                              itemBuilder: (context, index) {
+                                return photoContainer(context, index);
+                              }),
+                        ),
+                        ElevatedButton(
+                onPressed: () {},
+                child: Text("Delete ${selectedItems.length} images")),
+                        ],
+                      ))
+                ],
+              );
   }
+
+
 
   Column _defectedPhotos() {
     return Column(
@@ -115,7 +116,6 @@ class _GalleryManagerState extends State<GalleryManager> {
                   SizedBox(
                     height: 300,
                     width: 300,
-                      //decoration: BoxDecoration(color: Colors.blueAccent),
                     child: MasonryGridView.builder(
                               itemCount: photos.length,
                               gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
@@ -126,7 +126,10 @@ class _GalleryManagerState extends State<GalleryManager> {
                                 itemBuilder: (context, index) {
                                   return photoContainer(context, index);
                                 }),
-                  )
+                  ),
+                  ElevatedButton(
+                onPressed: () {},
+                child: Text("Delete ${selectedItems.length} images")),
                 ],
               );
   }
@@ -146,8 +149,8 @@ class _GalleryManagerState extends State<GalleryManager> {
     return GridTile(
       child: Stack(alignment: Alignment.bottomRight, children: [
         Container(
-          height: 90,
-          width: 90,
+          height: 130,
+          width: 150,
           color: Colors.blueAccent,
           child: Image.asset(photos[index].filePath,fit: BoxFit.cover,),
         ),
