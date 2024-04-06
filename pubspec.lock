@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      sha256: c05b7406fdabc7a49a3929d4af76bcaccbbffcbcdcf185b082e1ae07da323d19
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
   clock:
     dependency: transitive
     description:
@@ -496,6 +504,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.4"
+  python_ffi:
+    dependency: "direct main"
+    description:
+      name: python_ffi
+      sha256: "077ec233fc640c4558724dc24dd50a6ee24563934f65d951844cc7b97344b02a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.4"
+  python_ffi_cpython:
+    dependency: transitive
+    description:
+      name: python_ffi_cpython
+      sha256: aed5c84fdd2fb0cc2a97f5db0308847f8b71beede578556afc392f51cfb73412
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.4+1"
+  python_ffi_cpython_dart:
+    dependency: transitive
+    description:
+      name: python_ffi_cpython_dart
+      sha256: "0a70042544ffb327113256445ba2b44c69e354eaa63c13e8270e099f2d60bbc1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.4"
+  python_ffi_dart:
+    dependency: transitive
+    description:
+      name: python_ffi_dart
+      sha256: "9c11a990d488822512b0324384fa06849aa356f63d13b4bc244178e3684d32cc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.4"
+  python_ffi_interface:
+    dependency: transitive
+    description:
+      name: python_ffi_interface
+      sha256: cb4b5c918b9b4f68f584bedb3c71c2b3ac8887239df13c360c973c9a2e13395a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   scaled_list:
     dependency: "direct main"
     description:

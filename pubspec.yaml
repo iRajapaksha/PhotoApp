@@ -46,6 +46,7 @@ dependencies:
   share_plus: ^8.0.2
   photo_manager: ^3.0.0
   photo_view: ^0.14.0
+  python_ffi: ^0.4.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
