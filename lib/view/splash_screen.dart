@@ -10,28 +10,24 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin{
-
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   late final AnimationController _controller =
       AnimationController(duration: Duration(seconds: 3), vsync: this)
         ..repeat(reverse: true);
   late final Animation<double> _animation =
       CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
-
-  // void navigateToNextScreen(BuildContext context) async {
-  //   SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   bool showWelcomeScreen = preferences.getBool('showWelcomeScreen') ?? true;
-  //   if (showWelcomeScreen) {
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => WelcomeView()));
-  //   } else {
-  //     Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //             builder: (context) => Home()));
-  //   }
-  // }
+  void navigateToNextScreen(BuildContext context) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    bool showWelcomeScreen = preferences.getBool('showWelcomeScreen') ?? true;
+    if (showWelcomeScreen) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => WelcomeView()));
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    }
+  }
 
   @override
   void dispose() {
@@ -44,17 +40,22 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 2), () {
-     // navigateToNextScreen(context);
+    Future.delayed(Duration(seconds: 3), () {
+      navigateToNextScreen(context);
     });
-  }    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 2, 0, 114),
-      body: FadeTransition(
-        opacity: _animation,
-        child: _splashScreen(),)
+      body: Center(
+        child: Container(
+            child: FadeTransition(
+          opacity: _animation,
+          child: _splashScreen()
+        )),
+      ),
     );
   }
 
@@ -64,30 +65,31 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
           Image.asset(
             'assets/icons/PhotoApp_Logo-removebg-preview.png',
-          width: 150, 
-          height: 150,),
+            width: 150,
+            height: 150,
+          ),
           Text(
-              'PhotoApp',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                letterSpacing: 1.0,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.7),
-                    offset: const Offset(2, 2),
-                    blurRadius:  10,
-                  ),
-                ],
-              ),
+            'PhotoApp',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              letterSpacing: 1.0,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.7),
+                  offset: const Offset(2, 2),
+                  blurRadius: 10,
+                ),
+              ],
             ),
-            Text('0.0.1',style: TextStyle(
-              color: Colors.grey
-            ),)
+          ),
+          Text(
+            '0.0.1',
+            style: TextStyle(color: Colors.grey),
+          )
         ],
       ),
     );

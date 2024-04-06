@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/splash_screen.dart';
-import 'package:photo_app/view/welcome_view.dart';
 
 
-void main() {
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const App());
 }
 class App extends StatelessWidget{

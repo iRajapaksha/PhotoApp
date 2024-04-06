@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BackgroundTriangles extends StatelessWidget {
   const BackgroundTriangles({super.key});
@@ -108,7 +109,9 @@ class WelcomeView extends StatelessWidget {
               const Spacer(),
               Center( // Center widget added to center the button horizontally
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                    await preferences.setBool('showWelcomeScreen', false);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Home()),
