@@ -24,5 +24,3 @@ class AssetThumbnail extends StatelessWidget {
     );
   }
 }
-
-

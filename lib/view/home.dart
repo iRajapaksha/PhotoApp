@@ -72,7 +72,13 @@ class Home extends StatelessWidget {
                       "Gallery",
                       Icons.image,
                           () {
-                        onPressedGallery(context);
+    PhotoManager.requestPermissionExtend().then((PermissionState state) {
+      if (state.isAuth) {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_)=> const GalleryView())
+        );
+      }
+    });
                       },
                     ),
                   ],
@@ -105,7 +111,7 @@ class Home extends StatelessWidget {
           backgroundColor: Colors.white54,
           shadowColor: Colors.black,
           elevation: 15,
-          minimumSize: const Size(100, 120),
+          minimumSize: const Size(100, 60),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(color: Colors.black), // Add black margin
@@ -124,7 +130,7 @@ class Home extends StatelessWidget {
             ),
             Icon(
               iconData,
-              size: 35,
+              size: 30,
               color: Colors.black,
             ),
           ],

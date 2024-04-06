@@ -15,23 +15,31 @@ class GalleryView extends StatefulWidget {
 
 class _GalleryViewState extends State<GalleryView> {
   List<AssetEntity> assets = [];
-  List<Photo> photos = []; // Initialize photos list
+ // List<Photo> photos = []; // Initialize photos list
 
-  double screenWidth = 0; // Define screenWidth variable
+  //double screenWidth = 0; // Define screenWidth variable
+
+  // Future<void> _fetchAssets() async {
+  //   final allAssets =
+  //       await PhotoManager.getAssetListRange(start: 0, end: 100000);
+  //   setState(() {
+  //     assets =
+  //         allAssets.where((asset) => asset.type == AssetType.image).toList();
+  //   });
+  // }
 
   Future<void> _fetchAssets() async {
-    final allAssets =
-        await PhotoManager.getAssetListRange(start: 0, end: 100000);
-    setState(() {
-      assets =
-          allAssets.where((asset) => asset.type == AssetType.image).toList();
-    });
+    assets = await PhotoManager.getAssetListRange(start: 0, end: 100000);
+    setState(() {});
   }
 
   void initState() {
+    // TODO: implement initState
     super.initState();
+    _fetchAssets();
   }
 
+  
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
