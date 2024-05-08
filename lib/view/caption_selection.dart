@@ -18,21 +18,30 @@ class TopSuggestionSelected extends StatefulWidget {
 class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
   TextEditingController textController = TextEditingController();
   bool _isEditing = false;
-  String editedCaption = '';
-  String caption = '';
+  String caption = "";
   int selectedCaptionIndex = 0;
   List<Caption> captions = [];
 
-  void _getInfo() {
-    captions = Caption.getCaptions();
-    caption = captions[selectedCaptionIndex].description;
-    //textController = TextEditingController(text: caption);
-    //editedCaption = textController.text;
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController();
+    _getInfo();
+  }
+
+  Future<void> _getInfo() async {
+    var loadedCaptions = await Caption.getCaptions();
+    if (loadedCaptions.isNotEmpty) {
+      setState(() {
+        captions = loadedCaptions;
+        caption = captions[selectedCaptionIndex].description;
+        textController.text = caption;
+      });
+    }
   }
 
   @override
   void dispose() {
-    // Dispose the text editing controller when the widget is disposed
     textController.dispose();
     super.dispose();
   }
@@ -42,97 +51,68 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    _getInfo();
     return Scaffold(
       appBar: appBar(),
       endDrawer: endDrawer(context),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            heading(screenWidth, context, 'Sharing content'),
-            const SizedBox(
-              height: 15,
-            ),
-            _imageContainer(),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Select a Caption",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Roboto',
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            _scrollSnapList(screenHeight),
-            Container(
-              margin: const EdgeInsets.all(10.0),
-              padding: const EdgeInsets.all(12.0),
-              width: screenWidth * 0.95,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _isEditing
-                      ? Expanded(
-                          child: TextField(
-                            controller: textController,
-                            onChanged: (value) {
-                              setState(() {
-                                caption = value;
-                              });
-                            },
-                          ),
-                        )
-                      : Text(caption),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isEditing = !_isEditing;
-                        if (!_isEditing) {
-                          caption = textController.text;
-                        }
-                      });
-                    },
-                    child: Icon(
-                      _isEditing ? Icons.check : Icons.edit,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Button(
-                onPressed: () {
-                  onPressed(context);
-                },
-                title: 'Share')
-          ],
-        ),
+      body: captions.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : buildContent(screenWidth, screenHeight),
+    );
+  }
+
+  Widget buildContent(double screenWidth, double screenHeight) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          heading(screenWidth, context, 'Sharing content'),
+          SizedBox(height: 15),
+          _imageContainer(),
+          SizedBox(height: 10),
+          _subHeading(),
+          SizedBox(height: 10),
+          _scrollSnapList(screenHeight),
+          _editingContainer(screenWidth),
+          SizedBox(height: 5),
+          Button(onPressed: () => onPressed(context), title: 'Share')
+        ],
       ),
     );
   }
 
-  Future<dynamic> onPressed(BuildContext context) {
-    return Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ShareOn(
-                  selectedPhoto: widget.selectedPhoto,
-                  selectedCaption: captions[selectedCaptionIndex],
-                )));
+  Text _subHeading() => const Text(
+    "Select a Caption", 
+    textAlign: TextAlign.left, 
+    style: TextStyle(
+      fontSize: 16, 
+      fontWeight: FontWeight.bold, 
+      fontFamily: 'Roboto', 
+      color: Colors.black));
+
+  Widget _editingContainer(double screenWidth) {
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(12.0),
+      width: screenWidth * 0.95,
+      height: 50,
+      decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _isEditing ? Expanded(child: TextField(controller: textController)) : Expanded(child: Text(caption)),
+          GestureDetector(onTap: _toggleEdit, child: Icon(_isEditing ? Icons.check : Icons.edit))
+        ],
+      ),
+    );
+  }
+
+  void _toggleEdit() {
+    setState(() {
+      if (_isEditing) {
+        caption = textController.text;
+      }
+      _isEditing = !_isEditing;
+      textController.text = caption;
+    });
   }
 
   SizedBox _scrollSnapList(double screenHeight) {
@@ -142,23 +122,9 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
         itemBuilder: _buildListItem,
         itemCount: captions.length,
         itemSize: screenHeight * 0.07,
-        onItemFocus: (index) {
-          setState(() {
-            selectedCaptionIndex = index;
-          });
-        },
+        onItemFocus: onCaptionSelect,
         dynamicItemSize: true,
         scrollDirection: Axis.vertical,
-      ),
-    );
-  }
-
-  SizedBox _imageContainer() {
-    return SizedBox(
-      height: 300,
-      child: Image.asset(
-        widget.selectedPhoto.filePath,
-        fit: BoxFit.cover,
       ),
     );
   }
@@ -166,26 +132,42 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
   Widget _buildListItem(BuildContext context, int index) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    Caption caption = captions[index];
     bool isFocused = index == selectedCaptionIndex;
     return SizedBox(
       height: screenHeight * 0.07,
       width: screenWidth * 0.8,
       child: Card(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: BorderSide(
-                color: isFocused ? Colors.lightBlue : Colors.transparent,
-                width: 3)),
-        elevation: isFocused ? 15 : 5,
-        child: Center(
-          // Center widget added here
-          child: Text(
-            caption.description,
-            textAlign: TextAlign.center,
-          ),
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(color: isFocused ? Colors.lightBlue : Colors.transparent, width: 3)
         ),
+        elevation: isFocused ? 15 : 5,
+        child: Center(child: Text(captions[index].description, textAlign: TextAlign.center)),
       ),
+    );
+  }
+
+  void onCaptionSelect(int index) {
+    setState(() {
+      selectedCaptionIndex = index;
+      caption = captions[index].description;
+      textController.text = caption;
+    });
+  }
+
+  Future<void> onPressed(BuildContext context) {
+    return Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => ShareOn(
+          selectedPhoto: widget.selectedPhoto,
+          selectedCaption: textController.text)));
+  }
+
+  SizedBox _imageContainer() {
+    return SizedBox(
+      height: 300,
+      child: Image.asset(widget.selectedPhoto.filePath, fit: BoxFit.cover),
     );
   }
 }

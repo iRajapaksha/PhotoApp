@@ -6,7 +6,7 @@ import 'package:photo_app/models/photo.dart';
 
 class ShareOn extends StatelessWidget {
   final Photo selectedPhoto;
-  final Caption selectedCaption;
+  final String selectedCaption;
   const ShareOn(
       {super.key, required this.selectedPhoto, required this.selectedCaption});
 
@@ -65,7 +65,7 @@ class ShareOn extends StatelessWidget {
               color: Colors.grey,
             ),
             child: Text(
-              selectedCaption.description,
+              selectedCaption,
               style: const TextStyle(),
             ),
           ),
