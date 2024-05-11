@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_app/components/asset_thumbnail.dart';
 import 'package:photo_app/components/heading.dart';
 import 'package:photo_app/components/nav_bar.dart';
-import 'package:photo_app/view/caption_selection.dart';
 import 'package:photo_manager/photo_manager.dart';
-import '../models/photo.dart';
 
 class GalleryView extends StatefulWidget {
   const GalleryView({super.key});
