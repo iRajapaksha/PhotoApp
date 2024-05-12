@@ -6,7 +6,7 @@ import 'package:photo_app/view/caption_selection.dart';
 void main() {
   testWidgets('TopSuggestionSelected widget builds',
       (WidgetTester tester) async {
-    // Build our widget and trigger a frame.
+    // Build our widget
     await tester.pumpWidget(MaterialApp(
       home: TopSuggestionSelected(
         selectedPhoto: Photo(
@@ -24,7 +24,7 @@ void main() {
 
   testWidgets('TopSuggestionSelected widget components test',
       (WidgetTester tester) async {
-    // Build our widget and trigger a frame.
+    // Build our widget
     await tester.pumpWidget(MaterialApp(
       home: TopSuggestionSelected(
         selectedPhoto: Photo(

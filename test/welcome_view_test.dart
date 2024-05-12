@@ -9,10 +9,8 @@ void main() {
       home: WelcomeView(),
     ));
 
-    // Verify that 'PhotoApp' text is displayed
     expect(find.text('PhotoApp'), findsOneWidget);
 
-    // Verify that the 'Get Started' button is displayed
     expect(find.text('Get Started'), findsOneWidget);
   });
 
