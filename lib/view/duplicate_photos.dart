@@ -64,7 +64,6 @@ class _DuplicatesState extends State<Duplicates> {
   Widget _buildListItem(BuildContext context, int index) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final photo = photos[index];
     final isFocused = index == selectedPhotosetIndex;
 
     return SizedBox(

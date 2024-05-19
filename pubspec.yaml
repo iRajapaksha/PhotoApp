@@ -49,6 +49,11 @@ dependencies:
   python_ffi: ^0.4.4
   shared_preferences: ^2.2.2
   mockito: ^5.4.4
+  smooth_page_indicator: ^1.1.0
+  tflite_flutter_helper_plus: ^0.0.2
+  tflite_flutter: ^0.10.4
+  image: 3.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -76,6 +81,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/animation/Animation - 1709192474910.json
+    - assets/resnet50.tflite
   #   - images/a_dot_ham.jpeg
 
 
