@@ -6,6 +6,7 @@ import 'package:photo_app/models/caption.dart';
 import 'package:photo_app/models/photo.dart';
 import 'package:photo_app/view/share_on.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TopSuggestionSelected extends StatefulWidget {
   final Photo selectedPhoto;
@@ -79,14 +80,13 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
     );
   }
 
-  Text _subHeading() => const Text(
-    "Select a Caption", 
-    textAlign: TextAlign.left, 
-    style: TextStyle(
-      fontSize: 16, 
-      fontWeight: FontWeight.bold, 
-      fontFamily: 'Roboto', 
-      color: Colors.black));
+  Text _subHeading() => const Text("Select a Caption",
+      textAlign: TextAlign.left,
+      style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Roboto',
+          color: Colors.black));
 
   Widget _editingContainer(double screenWidth) {
     return Container(
@@ -94,12 +94,17 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
       padding: EdgeInsets.all(12.0),
       width: screenWidth * 0.95,
       height: 50,
-      decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+          color: Colors.black12, borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _isEditing ? Expanded(child: TextField(controller: textController)) : Expanded(child: Text(caption)),
-          GestureDetector(onTap: _toggleEdit, child: Icon(_isEditing ? Icons.check : Icons.edit))
+          _isEditing
+              ? Expanded(child: TextField(controller: textController))
+              : Expanded(child: Text(caption)),
+          GestureDetector(
+              onTap: _toggleEdit,
+              child: Icon(_isEditing ? Icons.check : Icons.edit))
         ],
       ),
     );
@@ -138,11 +143,14 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
       width: screenWidth * 0.8,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: isFocused ? Colors.lightBlue : Colors.transparent, width: 3)
-        ),
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(
+                color: isFocused ? Colors.lightBlue : Colors.transparent,
+                width: 3)),
         elevation: isFocused ? 15 : 5,
-        child: Center(child: Text(captions[index].description, textAlign: TextAlign.center)),
+        child: Center(
+            child:
+                Text(captions[index].description, textAlign: TextAlign.center)),
       ),
     );
   }
@@ -155,14 +163,15 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
     });
   }
 
-  Future<void> onPressed(BuildContext context) {
-    return Navigator.push(
-      context, 
-      MaterialPageRoute(
-        builder: (context) => ShareOn(
-          selectedPhoto: widget.selectedPhoto,
-          selectedCaption: textController.text
-        )));
+  void onPressed(BuildContext context) async {
+    await Share.share(textController.text);
+    // return Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => ShareOn(
+    //       selectedPhoto: widget.selectedPhoto,
+    //       selectedCaption: textController.text
+    //     )));
   }
 
   SizedBox _imageContainer() {
