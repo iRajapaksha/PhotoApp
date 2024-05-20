@@ -161,7 +161,8 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
       MaterialPageRoute(
         builder: (context) => ShareOn(
           selectedPhoto: widget.selectedPhoto,
-          selectedCaption: textController.text)));
+          selectedCaption: textController.text
+        )));
   }
 
   SizedBox _imageContainer() {
