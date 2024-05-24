@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/home.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BackgroundTriangles extends StatelessWidget {
@@ -30,22 +31,23 @@ class _BackgroundTrianglePainter extends CustomPainter {
         Offset(width * 0, height * 0),
         Offset(width * 0.5, height * 0.5),
       ],
-
       [
         Offset(width * 0.5, height * 0),
         Offset(width * 0, height * 0),
         Offset(width * 0, height * 1),
       ],
-
       [
         Offset(width * 1, height * 0.5),
         Offset(width * 0, height * 1),
         Offset(width * 0, height * 0),
       ]
-
     ];
 
-    final List<double> opacities = [0.4, 0.5, 0.2]; // Define opacity levels for each triangle
+    final List<double> opacities = [
+      0.4,
+      0.5,
+      0.2
+    ]; // Define opacity levels for each triangle
 
     for (int i = 0; i < triangles.length; i++) {
       final triangle = triangles[i];
@@ -56,10 +58,10 @@ class _BackgroundTrianglePainter extends CustomPainter {
         ..close();
 
       final paint = Paint()
-        ..color = Colors.blue.withOpacity(opacities[i]); // Set opacity for each triangle
+        ..color = Colors.blue
+            .withOpacity(opacities[i]); // Set opacity for each triangle
       canvas.drawPath(path, paint);
     }
-
   }
 
   @override
@@ -89,7 +91,8 @@ class WelcomeView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 100.0), // Added SizedBox to push the text lower
+              const SizedBox(
+                  height: 100.0), // Added SizedBox to push the text lower
               Text(
                 'PhotoApp',
                 style: TextStyle(
@@ -101,27 +104,30 @@ class WelcomeView extends StatelessWidget {
                     Shadow(
                       color: Colors.black.withOpacity(0.7),
                       offset: const Offset(2, 2),
-                      blurRadius:  10,
+                      blurRadius: 10,
                     ),
                   ],
                 ),
               ),
               const Spacer(),
-              Center( // Center widget added to center the button horizontally
+              Center(
+                // Center widget added to center the button horizontally
                 child: ElevatedButton(
                   onPressed: () async {
-                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
                     await preferences.setBool('showWelcomeScreen', false);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Home()),
+                    _requestPermission(context);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => const Home()),
 
-                    );
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
-
                     backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 40.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 5.0, horizontal: 40.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
@@ -139,9 +145,46 @@ class WelcomeView extends StatelessWidget {
               const SizedBox(height: 60.0),
             ],
           ),
-
         ],
       ),
     );
   }
+}
+
+void _requestPermission(BuildContext context) {
+  PhotoManager.requestPermissionExtend().then((PermissionState state) {
+    if (state.isAuth) {
+      // Permission granted, navigate to GalleryView
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const Home()),
+      );
+    } else {
+      // Permission denied, show dialog and request permission again
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Permission Required'),
+            content: const Text(
+                'This app requires access to your gallery to proceed. Please grant the necessary permissions.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Deny'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Allow'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _requestPermission(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  });
 }
