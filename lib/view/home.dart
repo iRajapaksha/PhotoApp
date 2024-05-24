@@ -65,20 +65,25 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: appBar(),
       endDrawer: endDrawer(context),
-      body: assetPaths.isEmpty && progress < 1.0
-          ?Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    value: progress,
-                  ),
-                  SizedBox(height: 20),
-                  Text('${(progress * 100).toStringAsFixed(0)}%'),
-                ],
-              ),
-            )
-          :  Stack(
+      body: 
+                // Not working for the emulator but works for the device
+    //=============================================================================  
+      // assetPaths.isEmpty && progress < 1.0
+      //     ?Center(
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.center,
+      //           children: [
+      //             CircularProgressIndicator(
+      //               value: progress,
+      //             ),
+      //             SizedBox(height: 20),
+      //             Text('${(progress * 100).toStringAsFixed(0)}%'),
+      //           ],
+      //         ),
+      //       )
+      //     :
+    //============================================================================
+          Stack(
         children: [
           // Background image
           Positioned.fill(
