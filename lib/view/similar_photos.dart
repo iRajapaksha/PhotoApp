@@ -2,9 +2,15 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:photo_app/models/photo.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
+import 'package:photo_app/image_paths.dart';
+import 'package:path/path.dart' as p;
 
 class Similars extends StatefulWidget {
-  const Similars({super.key});
+  final List<String> assetPaths;
+  const Similars({super.key, required this.assetPaths});
 
   @override
   State<Similars> createState() => _SimilarsState();
@@ -12,18 +18,54 @@ class Similars extends StatefulWidget {
 
 class _SimilarsState extends State<Similars> {
   List<Photo> photos = [];
+
+  List<String> images = imagePaths;
+
+  List<List<String>> _similarImages = [];
+
   HashSet selectedItems = HashSet();
   int selectedPhotosetIndex = 0;
+
+  Future<void> findSimilarImages(List<String> images) async {
+    const url = 'http://172.20.10.2:5000/find_similar_images';
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'images': images}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _similarImages = List<List<String>>.from(
+            data['similar_images'].map((group) => List<String>.from(group)),
+          );
+        });
+        debugPrint('Similar Images: $_similarImages');
+      } else {
+        try {
+          final errorMessage = json.decode(response.body)['error'];
+          debugPrint('Error: $errorMessage');
+        } catch (e) {
+          debugPrint('Error: ${response.reasonPhrase}, Body: ${response.body}');
+        }
+      }
+    } catch (e) {
+      debugPrint('Network Error: $e');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    getInitInfo();
+    findSimilarImages(images);
   }
 
-  void getInitInfo() {
-    photos = Photo.getPhotos();
-  }
+  // void getInitInfo() {
+  //   photos = Photo.getPhotos();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +90,7 @@ class _SimilarsState extends State<Similars> {
     return Center(
       child: ScrollSnapList(
         itemBuilder: _buildListItem,
-        itemCount: photos.length,
+        itemCount: _similarImages.length,
         itemSize: screenWidth * 0.6,
         onItemFocus: (index) {
           setState(() {
@@ -77,35 +119,36 @@ class _SimilarsState extends State<Similars> {
               : BorderSide.none,
         ),
         elevation: isFocused ? 15 : 5,
-        child: _imageGroup(),
+        child: _imageGroup(_similarImages[index]),
       ),
     );
   }
 
-  Widget _imageGroup() {
-    return Column(
-      children: [
-        Container(
-          height: 200,
-          decoration:
-              const BoxDecoration(color: Color.fromARGB(255, 64, 255, 109)),
-        ),
-        const SizedBox(height: 10),
+  Widget _imageGroup(List<String> imagePaths) {
+    return
+        //  Column(
+        //   children: [
+        // Container(
+        //   height: 200,
+        //   decoration:
+        //       const BoxDecoration(color: Color.fromARGB(255, 64, 255, 109)),
+        // ),
+        // const SizedBox(height: 10),
         Expanded(
-          child: GridView.builder(
-            itemCount: photos.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
-            ),
-            itemBuilder: (context, index) {
-              return photoContainer(context, index);
-            },
-          ),
+      child: GridView.builder(
+        itemCount: imagePaths.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 5,
+          mainAxisSpacing: 5,
         ),
-      ],
+        itemBuilder: (context, index) {
+          return photoContainer(context, imagePaths, index);
+        },
+      ),
     );
+    //   ],
+    // );
   }
 
   void multiSelection(String path) {
@@ -118,7 +161,17 @@ class _SimilarsState extends State<Similars> {
     });
   }
 
-  Widget photoContainer(BuildContext context, int index) {
+  Widget photoContainer(
+      BuildContext context, List<String> imagePaths, int index) {
+    String baseDir =
+        'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
+    List<String> relativePaths =
+        imagePaths.map((path) => p.relative(path, from: baseDir)).toList();
+
+    // Print relative paths
+    for (String path in relativePaths) {
+      print(path);
+    } // Debug log
     return GridTile(
       child: Stack(
         alignment: Alignment.bottomRight,
@@ -128,7 +181,7 @@ class _SimilarsState extends State<Similars> {
             width: 150,
             color: Colors.blueAccent,
             child: Image.asset(
-              photos[index].filePath,
+              relativePaths[index],
               fit: BoxFit.cover,
             ),
           ),
@@ -136,19 +189,19 @@ class _SimilarsState extends State<Similars> {
             padding: const EdgeInsets.all(3.0),
             child: InkWell(
               onTap: () {
-                multiSelection(photos[index].filePath);
+                multiSelection(imagePaths[index]);
               },
               child: Container(
                 height: 20,
                 width: 20,
                 decoration: BoxDecoration(
-                  color: selectedItems.contains(photos[index].filePath)
+                  color: selectedItems.contains(imagePaths[index])
                       ? Colors.blue
                       : Colors.white,
                   shape: BoxShape.circle,
                 ),
                 child: Visibility(
-                  visible: selectedItems.contains(photos[index].filePath),
+                  visible: selectedItems.contains(imagePaths[index]),
                   child: const Icon(
                     Icons.check_rounded,
                     color: Colors.black,
@@ -162,3 +215,40 @@ class _SimilarsState extends State<Similars> {
     );
   }
 }
+
+
+
+// created this method  to get the test data list as a list of strings
+// lib/image_paths.dart
+// run => dart lib/image_paths.dart
+// ===========================================================================================
+// import 'dart:io';
+
+// void main() {
+//   final Directory dir = Directory('F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/assets/Test_Data');
+//   if (!dir.existsSync()) {
+//     print('Directory does not exist.');
+//     return;
+//   }
+
+//   final List<String> files = dir
+//       .listSync()
+//       .where((item) => item is File)
+//       .map((item) => (item as File).absolute.path.replaceAll(r'\', '/'))
+//       .toList();
+
+//   final StringBuffer buffer = StringBuffer()
+//     ..writeln('final List<String> imagePaths = [');
+//   for (String file in files) {
+//     buffer.writeln(" '$file',");
+//   }
+//   buffer.writeln('];');
+
+//   final File output = File('lib/image_paths.dart');
+//   output.writeAsStringSync(buffer.toString());
+//   print('Generated image_paths.dart with ${files.length} assets.');
+// }
+
+// ===========================================================================================
+
+

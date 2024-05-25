@@ -130,7 +130,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const GalleryManager(),
+                            builder: (context) => GalleryManager(assetPaths:assetPaths),
                           ),
                         );
                       },
@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
                       Icons.image,
                       () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const GalleryView()));
+                            builder: (_) =>  GalleryView(assetPaths:assetPaths )));
                       },
                     ),
                   ],
@@ -158,7 +158,7 @@ class _HomeState extends State<Home> {
     PhotoManager.requestPermissionExtend().then((PermissionState state) {
       if (state.isAuth) {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const GalleryView()),
+          MaterialPageRoute(builder: (_) =>  GalleryView(assetPaths: assetPaths)),
         );
       }
     });

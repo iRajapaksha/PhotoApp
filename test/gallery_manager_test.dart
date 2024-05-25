@@ -5,7 +5,7 @@ import 'package:photo_app/view/gallery_manager.dart';
 void main() {
   testWidgets('GalleryManager widget builds', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(
-      home: GalleryManager(),
+      home: GalleryManager(assetPaths: [],),
     ));
 
     expect(find.byType(GalleryManager), findsOneWidget);
@@ -13,7 +13,7 @@ void main() {
 
   testWidgets('GalleryManager widget components test', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(
-      home: GalleryManager(),
+      home: GalleryManager(assetPaths: [],),
     ));
 
     expect(find.text('PhotoApp'), findsOneWidget);

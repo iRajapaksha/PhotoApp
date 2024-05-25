@@ -9,7 +9,8 @@ import 'package:photo_app/view/duplicate_photos.dart';
 import 'package:photo_app/view/similar_photos.dart';
 
 class GalleryManager extends StatefulWidget {
-  const GalleryManager({super.key});
+  final List<String> assetPaths ;
+  const GalleryManager({super.key, required this.assetPaths});
 
   @override
   State<GalleryManager> createState() => _GalleryManagerState();
@@ -48,11 +49,11 @@ class _GalleryManagerState extends State<GalleryManager> {
                 ),
               ],
             ),
-            const Expanded(
+            Expanded(
               child: TabBarView(children: [
                 Duplicates(),
                 Defects(),
-                Similars(),
+                Similars(assetPaths: widget.assetPaths),
               ]),
             ),
           ],

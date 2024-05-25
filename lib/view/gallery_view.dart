@@ -5,7 +5,8 @@ import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class GalleryView extends StatefulWidget {
-  const GalleryView({super.key});
+  final List<String> assetPaths ;
+  const GalleryView({super.key, required this.assetPaths});
 
   @override
   State<GalleryView> createState() => _GalleryViewState();
