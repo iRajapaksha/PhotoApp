@@ -7,6 +7,7 @@ import 'package:photo_app/view/top_suggestions.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_view.dart';
+import 'package:photo_app/Backend/image_search.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -137,6 +138,19 @@ class _HomeState extends State<Home> {
                     ),
                     _buildMenuButton(
                       context,
+                      "Dizzy Memory",
+                      Icons.search,
+                          () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuButton(
+                      context,
                       "Gallery",
                       Icons.image,
                       () {
@@ -167,14 +181,14 @@ class _HomeState extends State<Home> {
   Widget _buildMenuButton(BuildContext context, String text, IconData iconData,
       VoidCallback onPressed) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white54,
           shadowColor: Colors.black,
           elevation: 15,
-          minimumSize: const Size(100, 60),
+          minimumSize: const Size(100, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(color: Colors.black), // Add black margin

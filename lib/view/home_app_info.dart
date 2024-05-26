@@ -46,7 +46,7 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
 
     return Container(
       width: 300,
-      height: 450,
+      height: 375,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       //  color: Colors.cyanAccent,
@@ -55,7 +55,7 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
         children: [
           // Ensure the PageView has a fixed height
           SizedBox(
-            height: 400,
+            height: 350,
             child: PageView(
               controller: _pageController,
               children: [
@@ -85,13 +85,13 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(image, width: 200, height: 200, ),
+        Image.asset(image, width: 200, height: 175, ),
         const SizedBox(height: 24),
         Text(
           heading,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Text(

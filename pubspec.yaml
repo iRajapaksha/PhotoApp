@@ -48,7 +48,7 @@ dependencies:
   python_ffi: ^0.4.4
   shared_preferences: ^2.2.2
   mockito: ^5.4.4
-  image: ^4.1.7
+  image: ^4.2.0
   image_picker: ^1.0.7
   smooth_page_indicator: ^1.1.0
   tflite_flutter: ^0.10.4

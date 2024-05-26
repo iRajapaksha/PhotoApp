@@ -62,7 +62,7 @@ class Options extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Center(child: Icon(Icons.cloud , size: 75,)),
+                    const Center(child: Icon(Icons.cloud , size: 100,)),
                     Center(
                       child: Container(
                         height: 50,
@@ -134,17 +134,17 @@ class Options extends StatelessWidget {
                       ),
                       ),
                     ),
-                    const Center(child: Icon(Icons.settings, size: 75,)),
+                    const Center(child: Icon(Icons.settings, size: 100,)),
                     Center(child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10), // Adjust the radius here
                       ),
                     ), child: const Text("Storage"),)),
-                    Center(child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // Adjust the radius here
-                      ),
-                    ), child: const Text("About"),)),
+                    // Center(child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(10), // Adjust the radius here
+                    //   ),
+                    // ), child: const Text("About"),)),
                     Center(child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10), // Adjust the radius here
