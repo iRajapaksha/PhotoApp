@@ -87,12 +87,12 @@ class _HomeState extends State<Home> {
           Stack(
         children: [
           // Background image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/icons/background.jpg',
-              fit: BoxFit.cover,
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Image.asset(
+          //     'assets/icons/background.jpg',
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
           Align(
             alignment: Alignment.bottomCenter,
             child: ClipRRect(
@@ -138,7 +138,7 @@ class _HomeState extends State<Home> {
                     ),
                     _buildMenuButton(
                       context,
-                      "Dizzy Memory",
+                      "PicScout",
                       Icons.search,
                           () {
                         Navigator.push(
@@ -181,16 +181,16 @@ class _HomeState extends State<Home> {
   Widget _buildMenuButton(BuildContext context, String text, IconData iconData,
       VoidCallback onPressed) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white54,
+          backgroundColor: Colors.blueAccent,
           shadowColor: Colors.black,
           elevation: 15,
-          minimumSize: const Size(100, 50),
+          minimumSize: const Size(100, 45),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(15.0),
             side: const BorderSide(color: Colors.black), // Add black margin
           ),
         ),

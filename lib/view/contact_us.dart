@@ -41,7 +41,7 @@ class ContactUsPage extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'PhotoApp',
-                    style: Theme.of(context).textTheme.headline5!.copyWith(
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
                     ),

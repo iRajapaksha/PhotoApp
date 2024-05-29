@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeAppInfo extends StatefulWidget {
   const HomeAppInfo({super.key});
@@ -33,23 +34,23 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
 
   @override
   Widget build(BuildContext context) {
-    const search = 'assets/icons/search.gif';
+    const search = 'assets/icons/search.json';
     const searchHeading = 'Filter Gallery';
     const searchText =
         'Search for similar, defected, or duplicate photos in the gallery';
-    const post = 'assets/icons/post.gif';
+    const post = 'assets/icons/caption.json';
     const postHeading = 'Generate Captions';
     const postText = 'Auto generate captions for your best looking photos';
-    const share = 'assets/icons/refer.gif';
+    const share = 'assets/icons/social_media.json';
     const shareHeading = 'Share on Social Media';
     const shareText = 'Quick share on all the social media platforms';
 
     return Container(
-      width: 300,
-      height: 375,
+      width: 275,
+      height: 380,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-      //  color: Colors.cyanAccent,
+        // color: Colors.cyanAccent,
       ),
       child: Column(
         children: [
@@ -59,9 +60,36 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
             child: PageView(
               controller: _pageController,
               children: [
-                _onboardingPage(search, searchHeading, searchText),
-                _onboardingPage(post, postHeading, postText),
-                _onboardingPage(share, shareHeading, shareText),
+                _onboardingPage(
+                  Lottie.asset(
+                    search,
+                    width: 300,
+                    height: 250,
+                    fit: BoxFit.fill,
+                  ),
+                  searchHeading,
+                  searchText,
+                ),
+                _onboardingPage(
+                  Lottie.asset(
+                    post,
+                    width: 300,
+                    height: 225,
+                    fit: BoxFit.fill,
+                  ),
+                  postHeading,
+                  postText,
+                ),
+                _onboardingPage(
+                  Lottie.asset(
+                    share,
+                    width: 300,
+                    height: 225,
+                    fit: BoxFit.fill,
+                  ),
+                  shareHeading,
+                  shareText,
+                ),
               ],
             ),
           ),
@@ -81,22 +109,22 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
     );
   }
 
-  Widget _onboardingPage(String image, String heading, String text) {
+  Widget _onboardingPage(Widget asset, String heading, String text) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(image, width: 200, height: 175, ),
-        const SizedBox(height: 24),
+        asset,
+        const SizedBox(height: 1),
         Text(
           heading,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 1),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 1),
           child: Text(
             text,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             textAlign: TextAlign.center,
           ),
         ),
