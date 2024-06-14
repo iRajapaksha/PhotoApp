@@ -66,7 +66,7 @@ def find_similar_images():
 
 @app.route('/')
 def home():
-    return 'Hello, World!'
+    return 'Similar Image Detection'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

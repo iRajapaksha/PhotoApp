@@ -47,6 +47,7 @@ class _HomeState extends State<Home> {
 
       setState(() {
         assetPaths = pathsList;
+        print(assetPaths[0]);
       });
     }
   }
@@ -66,105 +67,95 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: appBar(),
       endDrawer: endDrawer(context),
-      body: 
-                // Not working for the emulator but works for the device
-    //=============================================================================  
-      // assetPaths.isEmpty && progress < 1.0
-      //     ?Center(
-      //         child: Column(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             CircularProgressIndicator(
-      //               value: progress,
-      //             ),
-      //             SizedBox(height: 20),
-      //             Text('${(progress * 100).toStringAsFixed(0)}%'),
-      //           ],
-      //         ),
-      //       )
-      //     :
-    //============================================================================
-          Stack(
-        children: [
-          // Background image
-          // Positioned.fill(
-          //   child: Image.asset(
-          //     'assets/icons/background.jpg',
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                width: screenWidth * 0.9,
-                height: screenHeight * 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body:
+          // Not working for the emulator but works for the device
+          //=============================================================================
+          // assetPaths.isEmpty && progress < 1.0
+          //     ? Center(
+          //         child: Column(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             CircularProgressIndicator(
+          //               value: progress,
+          //             ),
+          //             SizedBox(height: 20),
+          //             Text('${(progress * 100).toStringAsFixed(0)}%'),
+          //           ],
+          //         ),
+          //       )
+          //     :
+              //============================================================================
+              Stack(
                   children: [
-                    const HomeAppInfo(),
-                    _buildMenuButton(
-                      context,
-                      "Top Suggestions",
-                      Icons.thumb_up,
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const TopSuggestions(),
-                          ),
-                        );
-                      },
+                    // Background image
+                    Positioned.fill(
+                      child: Image.asset(
+                        'assets/icons/background.jpg',
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    _buildMenuButton(
-                      context,
-                      "Gallery Manager",
-                      Icons.photo_album,
-                      () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GalleryManager(assetPaths:assetPaths),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                        ),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.transparent,
                           ),
-                        );
-                      },
-                    ),
-                    _buildMenuButton(
-                      context,
-                      "PicScout",
-                      Icons.search,
-                          () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SearchPage(),
+                          width: screenWidth * 0.9,
+                          height: screenHeight * 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const HomeAppInfo(),
+                              _buildMenuButton(
+                                context,
+                                "Top Suggestions",
+                                Icons.thumb_up,
+                                () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const TopSuggestions(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              _buildMenuButton(
+                                context,
+                                "Gallery Manager",
+                                Icons.photo_album,
+                                () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GalleryManager(
+                                          assetPaths: assetPaths),
+                                    ),
+                                  );
+                                },
+                              ),
+                              _buildMenuButton(
+                                context,
+                                "Gallery",
+                                Icons.image,
+                                () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (_) =>
+                                          GalleryView(assetPaths: assetPaths)));
+                                },
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
-                    _buildMenuButton(
-                      context,
-                      "Gallery",
-                      Icons.image,
-                      () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) =>  GalleryView(assetPaths:assetPaths )));
-                      },
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ),
-          ),
-        ],
-    ),
     );
   }
 
@@ -172,7 +163,8 @@ class _HomeState extends State<Home> {
     PhotoManager.requestPermissionExtend().then((PermissionState state) {
       if (state.isAuth) {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) =>  GalleryView(assetPaths: assetPaths)),
+          MaterialPageRoute(
+              builder: (_) => GalleryView(assetPaths: assetPaths)),
         );
       }
     });

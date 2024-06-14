@@ -1,9 +1,12 @@
 import 'dart:collection';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:photo_app/models/photo.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:photo_app/image_paths.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Defects extends StatefulWidget {
   const Defects({super.key});
@@ -15,16 +18,60 @@ class Defects extends StatefulWidget {
 class _DefectsState extends State<Defects> {
   List<Photo> photos = [];
   HashSet selectedItems = HashSet();
+  List<String> images = imagePaths;
+  String? _result;
+  List<File> _imageFiles = [];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _loadImages();
+    _uploadImages();
     getInitInfo();
   }
 
   void getInitInfo() {
     photos = Photo.getPhotos();
   }
+
+  // Upload images to the Flask server
+  Future<void> _uploadImages() async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://127.0.0.1:5001/upload'), // Change the URL to match your server
+    );
+
+    // Add each image file to the request
+    for (var imageFile in _imageFiles) {
+      request.files.add(await http.MultipartFile.fromPath('files[]', imageFile.path));
+    }
+
+    // Send the request and handle the response
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      var responseData = await response.stream.bytesToString();
+      var decodedData = json.decode(responseData);
+      print(decodedData); // Output the response from the server
+    } else {
+      print('Upload failed with status: ${response.statusCode}');
+    }
+  }
+
+  void _loadImages() {
+  
+  // List<String> relativePaths = imagePaths.map((path) {
+  //   // Extract the file name from the absolute path
+  //   String fileName = path.split('/').last;
+  //   // Construct the relative path by appending the file name to the directory
+  //   return 'assets/Test_Data/$fileName';
+  // }).toList();
+
+  setState(() {
+    // Create File objects from relative paths
+    _imageFiles = images.map((path) => File(path)).toList();
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +81,8 @@ class _DefectsState extends State<Defects> {
         children: [
           Expanded(child: _imageGroup()),
           ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Delete ${selectedItems.length} images")),
-      
+              onPressed: () {},
+              child: Text("Delete ${selectedItems.length} images")),
         ],
       ),
     );
@@ -44,32 +90,31 @@ class _DefectsState extends State<Defects> {
 
   Column _imageGroup() {
     return Column(
-      children: [  
-    // Container(
-    //               height: 200,
-    //               decoration: const BoxDecoration(
-    //                   color: Color.fromARGB(255, 64, 255, 109)),
-    //             ),
-      const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: GridView.builder(
-                      itemCount: photos.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                      ),
-                      itemBuilder: (context, index) {
-                        return photoContainer(context, index);
-                      }),
-                ),
-
+      children: [
+        // Container(
+        //               height: 200,
+        //               decoration: const BoxDecoration(
+        //                   color: Color.fromARGB(255, 64, 255, 109)),
+        //             ),
+        const SizedBox(
+          height: 10,
+        ),
+        Expanded(
+          child: GridView.builder(
+              itemCount: photos.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+              ),
+              itemBuilder: (context, index) {
+                return photoContainer(context, index);
+              }),
+        ),
       ],
     );
   }
+
   void multiSelection(String path) {
     setState(() {
       if (selectedItems.contains(path)) {
@@ -78,7 +123,6 @@ class _DefectsState extends State<Defects> {
         selectedItems.add(path);
       }
     });
-
   }
 
   GridTile photoContainer(BuildContext context, int index) {
@@ -88,7 +132,10 @@ class _DefectsState extends State<Defects> {
           height: 130,
           width: 150,
           color: Colors.blueAccent,
-          child: Image.asset(photos[index].filePath,fit: BoxFit.cover,),
+          child: Image.asset(
+            photos[index].filePath,
+            fit: BoxFit.cover,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(3.0),
@@ -100,21 +147,23 @@ class _DefectsState extends State<Defects> {
               height: 20,
               width: 20,
               decoration: BoxDecoration(
-                color: selectedItems.contains(photos[index].filePath) ? Colors.blue : Colors.white,
+                color: selectedItems.contains(photos[index].filePath)
+                    ? Colors.blue
+                    : Colors.white,
                 shape: BoxShape.circle,
-
               ),
               child: Visibility(
                   visible: selectedItems.contains(photos[index].filePath),
-                  child: const Icon(Icons.check_rounded, color: Colors.black,)
-              ),
+                  child: const Icon(
+                    Icons.check_rounded,
+                    color: Colors.black,
+                  )),
             ),
           ),
         )
       ]),
     );
   }
-
 
 // Expanded _scrollSnapList(double screenWidth) {
 //     return Expanded(
@@ -123,7 +172,7 @@ class _DefectsState extends State<Defects> {
 //           itemBuilder: _buildListItem,
 //           itemCount: 10,
 //           itemSize: screenWidth * 0.6,
-          
+
 //           dynamicItemSize: true,
 //           duration: 10, onItemFocus: (int ) {  },
 //         ),
@@ -157,5 +206,4 @@ class _DefectsState extends State<Defects> {
 //       ),
 //     );
 //   }
-
 }

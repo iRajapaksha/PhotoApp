@@ -27,7 +27,7 @@ class _SimilarsState extends State<Similars> {
   int selectedPhotosetIndex = 0;
 
   Future<void> findSimilarImages(List<String> images) async {
-    const url = 'http://172.20.10.2:5000/find_similar_images';
+    const url = 'http://192.168.1.100:5000/find_similar_images';
 
     try {
       final response = await http.post(
@@ -62,10 +62,6 @@ class _SimilarsState extends State<Similars> {
     super.initState();
     findSimilarImages(images);
   }
-
-  // void getInitInfo() {
-  //   photos = Photo.getPhotos();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +122,6 @@ class _SimilarsState extends State<Similars> {
 
   Widget _imageGroup(List<String> imagePaths) {
     return
-        //  Column(
-        //   children: [
-        // Container(
-        //   height: 200,
-        //   decoration:
-        //       const BoxDecoration(color: Color.fromARGB(255, 64, 255, 109)),
-        // ),
-        // const SizedBox(height: 10),
         Expanded(
       child: GridView.builder(
         itemCount: imagePaths.length,
@@ -147,8 +135,7 @@ class _SimilarsState extends State<Similars> {
         },
       ),
     );
-    //   ],
-    // );
+
   }
 
   void multiSelection(String path) {
