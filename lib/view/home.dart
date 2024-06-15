@@ -88,12 +88,12 @@ class _HomeState extends State<Home> {
               Stack(
                   children: [
                     // Background image
-                    Positioned.fill(
-                      child: Image.asset(
-                        'assets/icons/background.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    // Positioned.fill(
+                    //   child: Image.asset(
+                    //     'assets/icons/background.jpg',
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    // ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: ClipRRect(
@@ -135,6 +135,19 @@ class _HomeState extends State<Home> {
                                     MaterialPageRoute(
                                       builder: (context) => GalleryManager(
                                           assetPaths: assetPaths),
+                                    ),
+                                  );
+                                },
+                              ),
+                              _buildMenuButton(
+                                context,
+                                "PicScout",
+                                Icons.search,
+                                    () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SearchPage(),
                                     ),
                                   );
                                 },
