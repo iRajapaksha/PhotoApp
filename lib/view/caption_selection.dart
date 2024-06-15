@@ -9,7 +9,7 @@ import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:share_plus/share_plus.dart';
 
 class TopSuggestionSelected extends StatefulWidget {
-  final Photo selectedPhoto;
+  final String selectedPhoto;
   const TopSuggestionSelected({super.key, required this.selectedPhoto});
 
   @override
@@ -177,7 +177,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
   SizedBox _imageContainer() {
     return SizedBox(
       height: 300,
-      child: Image.asset(widget.selectedPhoto.filePath, fit: BoxFit.cover),
+      child: Image.asset(widget.selectedPhoto, fit: BoxFit.cover),
     );
   }
 }

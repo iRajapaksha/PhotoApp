@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:photo_app/components/button.dart';
 import 'package:photo_app/components/heading.dart';
@@ -5,7 +7,9 @@ import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/models/photo.dart';
 import 'package:photo_app/view/caption_selection.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:photo_app/image_paths.dart';
+import 'package:path/path.dart' as p;
 class TopSuggestions extends StatefulWidget {
   const TopSuggestions({super.key});
 
@@ -16,11 +20,46 @@ class TopSuggestions extends StatefulWidget {
 class _TopSuggestionsState extends State<TopSuggestions> {
   int selectedPhotoIndex = 0;
   late List<Photo> photos;
+  final List<String> _imagePaths = imagePaths;
+  List<String> _bestLookingImages = [];
+Future<void> _uploadImages() async {
+    if (_imagePaths.isEmpty) {
+      print('No images to upload');
+      return;
+    }
+
+    var uri = Uri.parse('http://192.168.1.100:5002/upload');
+    var request = http.Request('POST', uri);
+    request.headers['Content-Type'] = 'application/json';
+    request.body = jsonEncode({
+      'image_paths': _imagePaths,
+    });
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseData = await http.Response.fromStream(response);
+        final data = json.decode(responseData.body);
+
+        setState(() {
+          _bestLookingImages = List<String>.from(data['images_surpassing_thresholds']);
+        });
+
+        print(_bestLookingImages);
+      } else {
+        print('Failed to upload images. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _getInitInfo();
+    _uploadImages();
   }
 
   void _getInitInfo() {
@@ -40,7 +79,12 @@ class _TopSuggestionsState extends State<TopSuggestions> {
           const SizedBox(height: 30),
           _scrollSnapList(screenWidth),
           const SizedBox(height: 10),
-          Button(onPressed: () {onPressed(context);},title: 'Select',),
+          Button(
+            onPressed: () {
+              onPressed(context);
+            },
+            title: 'Select',
+          ),
           const SizedBox(height: 10),
           _imageDescription(),
         ],
@@ -80,11 +124,15 @@ class _TopSuggestionsState extends State<TopSuggestions> {
   }
 
   Future<dynamic> onPressed(BuildContext context) {
+    String baseDir =
+        'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
+    List<String> relativePaths =
+        _bestLookingImages.map((path) => p.relative(path, from: baseDir)).toList();
     return Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => TopSuggestionSelected(
-          selectedPhoto: photos[selectedPhotoIndex],
+          selectedPhoto: relativePaths[selectedPhotoIndex],
         ),
       ),
     );
@@ -95,7 +143,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
       child: Center(
         child: ScrollSnapList(
           itemBuilder: _buildListItem,
-          itemCount: photos.length,
+          itemCount: _bestLookingImages.length,
           itemSize: screenWidth * 0.6,
           onItemFocus: (index) {
             setState(() {
@@ -110,9 +158,13 @@ class _TopSuggestionsState extends State<TopSuggestions> {
   }
 
   Widget _buildListItem(BuildContext context, int index) {
+    String baseDir =
+        'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
+    List<String> relativePaths =
+        _bestLookingImages.map((path) => p.relative(path, from: baseDir)).toList();
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final photo = photos[index];
+    final photo = relativePaths[index];
     final isFocused = index == selectedPhotoIndex;
     return SizedBox(
       width: screenWidth * 0.6,
@@ -128,7 +180,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.asset(
-            photo.filePath,
+            photo,
             fit: BoxFit.cover,
           ),
         ),
