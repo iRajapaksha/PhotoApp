@@ -7,6 +7,8 @@ import 'package:photo_app/image_paths.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:mime/mime.dart';
+import 'package:path/path.dart' as p;
 
 class Defects extends StatefulWidget {
   const Defects({super.key});
@@ -19,8 +21,10 @@ class _DefectsState extends State<Defects> {
   List<Photo> photos = [];
   HashSet selectedItems = HashSet();
   List<String> images = imagePaths;
-  String? _result;
+  // String? _result;
   List<File> _imageFiles = [];
+  List<String> blurImages = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,44 +38,55 @@ class _DefectsState extends State<Defects> {
     photos = Photo.getPhotos();
   }
 
-  // Upload images to the Flask server
-  Future<void> _uploadImages() async {
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse('http://127.0.0.1:5001/upload'), // Change the URL to match your server
-    );
-
-    // Add each image file to the request
-    for (var imageFile in _imageFiles) {
-      request.files.add(await http.MultipartFile.fromPath('files[]', imageFile.path));
+ Future<void> _uploadImages() async {
+    if (images.isEmpty) {
+      print('No images to upload');
+      return;
     }
 
-    // Send the request and handle the response
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      var responseData = await response.stream.bytesToString();
-      var decodedData = json.decode(responseData);
-      print(decodedData); // Output the response from the server
-    } else {
-      print('Upload failed with status: ${response.statusCode}');
+    var uri = Uri.parse('http://192.168.1.100:5001/upload');
+    var request = http.Request('POST', uri);
+    request.headers['Content-Type'] = 'application/json';
+    request.body = jsonEncode({
+      'image_paths': images,
+    });
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseData = await http.Response.fromStream(response);
+        final data = json.decode(responseData.body);
+
+        // Extracting the list of blur image paths
+        setState(() {
+          blurImages = List<String>.from(
+              data['blur_images'].map((img) => img['image_path']));
+        });
+        print(blurImages);
+
+        // Handle the response data as needed
+      } else {
+        print('Failed to upload images. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
   void _loadImages() {
-  
-  // List<String> relativePaths = imagePaths.map((path) {
-  //   // Extract the file name from the absolute path
-  //   String fileName = path.split('/').last;
-  //   // Construct the relative path by appending the file name to the directory
-  //   return 'assets/Test_Data/$fileName';
-  // }).toList();
+    // List<String> relativePaths = imagePaths.map((path) {
+    //   // Extract the file name from the absolute path
+    //   String fileName = path.split('/').last;
+    //   // Construct the relative path by appending the file name to the directory
+    //   return 'assets/Test_Data/$fileName';
+    // }).toList();
 
-  setState(() {
-    // Create File objects from relative paths
-    _imageFiles = images.map((path) => File(path)).toList();
-  });
-}
-
+    setState(() {
+      // Create File objects from relative paths
+      _imageFiles = images.map((path) => File(path)).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +116,7 @@ class _DefectsState extends State<Defects> {
         ),
         Expanded(
           child: GridView.builder(
-              itemCount: photos.length,
+              itemCount: blurImages.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 5,
@@ -126,6 +141,11 @@ class _DefectsState extends State<Defects> {
   }
 
   GridTile photoContainer(BuildContext context, int index) {
+    String baseDir =
+        'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
+    List<String> relativePaths =
+        blurImages.map((path) => p.relative(path, from: baseDir)).toList();
+
     return GridTile(
       child: Stack(alignment: Alignment.bottomRight, children: [
         Container(
@@ -133,7 +153,7 @@ class _DefectsState extends State<Defects> {
           width: 150,
           color: Colors.blueAccent,
           child: Image.asset(
-            photos[index].filePath,
+            relativePaths[index],
             fit: BoxFit.cover,
           ),
         ),
@@ -141,19 +161,19 @@ class _DefectsState extends State<Defects> {
           padding: const EdgeInsets.all(3.0),
           child: InkWell(
             onTap: () {
-              multiSelection(photos[index].filePath);
+              multiSelection(blurImages[index]);
             },
             child: Container(
               height: 20,
               width: 20,
               decoration: BoxDecoration(
-                color: selectedItems.contains(photos[index].filePath)
+                color: selectedItems.contains(blurImages[index])
                     ? Colors.blue
                     : Colors.white,
                 shape: BoxShape.circle,
               ),
               child: Visibility(
-                  visible: selectedItems.contains(photos[index].filePath),
+                  visible: selectedItems.contains(blurImages[index]),
                   child: const Icon(
                     Icons.check_rounded,
                     color: Colors.black,

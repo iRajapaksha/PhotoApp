@@ -54,7 +54,7 @@ class _SimilarsState extends State<Similars> {
       }
     } catch (e) {
       debugPrint('Network Error: $e');
-    }
+    } 
   }
 
   @override
