@@ -152,39 +152,41 @@ class WelcomeView extends StatelessWidget {
 }
 
 void _requestPermission(BuildContext context) {
-  PhotoManager.requestPermissionExtend().then((PermissionState state) {
-    if (state.isAuth) {
-      // Permission granted, navigate to GalleryView
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const Home()),
-      );
-    } else {
-      // Permission denied, show dialog and request permission again
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Permission Required'),
-            content: const Text(
-                'This app requires access to your gallery to proceed. Please grant the necessary permissions.'),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Deny'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text('Allow'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _requestPermission(context);
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-  });
-}
+    PhotoManager.requestPermissionExtend().then((PermissionState state) {
+      if (state.isAuth) {
+        // Permission granted, navigate to GalleryView
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => Home()),
+        );
+      } else {
+        // Permission denied, show dialog and request permission again
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Permission Required'),
+              content: const Text(
+                  'This app requires access to your gallery to proceed. Please grant the necessary permissions.'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Deny'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('Allow'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _requestPermission(context);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+  }
+
+

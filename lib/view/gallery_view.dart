@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:photo_app/components/asset_thumbnail.dart';
 import 'package:photo_app/components/heading.dart';
@@ -5,8 +7,10 @@ import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class GalleryView extends StatefulWidget {
-  final List<String> assetPaths ;
-  const GalleryView({super.key, required this.assetPaths});
+  final List<String> assetPaths;
+  final List<File> imageFiles;
+  const GalleryView(
+      {super.key, required this.assetPaths, required this.imageFiles});
 
   @override
   State<GalleryView> createState() => _GalleryViewState();
@@ -14,7 +18,7 @@ class GalleryView extends StatefulWidget {
 
 class _GalleryViewState extends State<GalleryView> {
   List<AssetEntity> assets = [];
- // List<Photo> photos = []; // Initialize photos list
+  // List<Photo> photos = []; // Initialize photos list
 
   //double screenWidth = 0; // Define screenWidth variable
 
@@ -35,12 +39,12 @@ class _GalleryViewState extends State<GalleryView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _fetchAssets();
   }
 
-  
   @override
   Widget build(BuildContext context) {
+    List<String> imagePaths = widget.assetPaths;
+    List<File> files = widget.imageFiles;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: appBar(),
@@ -53,10 +57,13 @@ class _GalleryViewState extends State<GalleryView> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
               ),
-              itemCount: assets.length,
+              itemCount: files.length,
               itemBuilder: (_, index) {
-                return AssetThumbnail(
-                  asset: assets[index],
+                return Container(
+                  height: 130,
+                  width: 150,
+                  color: Colors.blueAccent,
+                  child: Image.file(files[index],fit: BoxFit.cover,)
                 );
               },
             ),

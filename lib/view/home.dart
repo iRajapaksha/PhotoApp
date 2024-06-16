@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:photo_app/image_paths.dart';
 import 'package:photo_app/view/gallery_manager.dart';
 import 'package:photo_app/view/home_app_info.dart';
 import 'package:photo_app/view/top_suggestions.dart';
@@ -18,6 +19,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<String> assetPaths = [];
+  List<File> imageFiles = [];
   double progress = 0.0;
 
   Future<void> _fetchAssets() async {
@@ -32,11 +34,13 @@ class _HomeState extends State<Home> {
       );
 
       final List<String> pathsList = [];
+      final List<File> files = [];
       int totalAssets = assets.length;
       for (int i = 0; i < totalAssets; i++) {
         final AssetEntity asset = assets[i];
         final File? file = await asset.file;
         if (file != null) {
+          files.add(file);
           pathsList.add(file.path);
         }
         // Update progress
@@ -47,6 +51,7 @@ class _HomeState extends State<Home> {
 
       setState(() {
         assetPaths = pathsList;
+        imageFiles = files;
         print(assetPaths[0]);
       });
     }
@@ -70,20 +75,20 @@ class _HomeState extends State<Home> {
       body:
           // Not working for the emulator but works for the device
           //=============================================================================
-          // assetPaths.isEmpty && progress < 1.0
-          //     ? Center(
-          //         child: Column(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: [
-          //             CircularProgressIndicator(
-          //               value: progress,
-          //             ),
-          //             SizedBox(height: 20),
-          //             Text('${(progress * 100).toStringAsFixed(0)}%'),
-          //           ],
-          //         ),
-          //       )
-          //     :
+          assetPaths.isEmpty && progress < 1.0
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        value: progress,
+                      ),
+                      SizedBox(height: 20),
+                      Text('${(progress * 100).toStringAsFixed(0)}%'),
+                    ],
+                  ),
+                )
+              :
               //============================================================================
               Stack(
                   children: [
@@ -143,7 +148,7 @@ class _HomeState extends State<Home> {
                                 context,
                                 "PicScout",
                                 Icons.search,
-                                    () {
+                                () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -159,7 +164,7 @@ class _HomeState extends State<Home> {
                                 () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (_) =>
-                                          GalleryView(assetPaths: assetPaths)));
+                                          GalleryView(assetPaths: assetPaths, imageFiles: imageFiles)));
                                 },
                               ),
                             ],
@@ -177,7 +182,7 @@ class _HomeState extends State<Home> {
       if (state.isAuth) {
         Navigator.of(context).push(
           MaterialPageRoute(
-              builder: (_) => GalleryView(assetPaths: assetPaths)),
+              builder: (_) => GalleryView(assetPaths: assetPaths, imageFiles: imageFiles,)),
         );
       }
     });
