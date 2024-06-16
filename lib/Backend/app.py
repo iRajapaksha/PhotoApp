@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import cv2
@@ -9,6 +10,7 @@ from keras.layers import GlobalAveragePooling2D
 from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
+CORS(app)
 
 def load_images(image_paths):
     images = []
