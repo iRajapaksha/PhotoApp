@@ -111,37 +111,42 @@ class WelcomeView extends StatelessWidget {
               ),
               const Spacer(),
               Center(
-                // Center widget added to center the button horizontally
-                child: ElevatedButton(
-                  onPressed: () async {
-                    SharedPreferences preferences =
-                        await SharedPreferences.getInstance();
-                    await preferences.setBool('showWelcomeScreen', false);
-                    _requestPermission(context);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => const Home()),
-
-                    // );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 40.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    elevation: 15.0,
+                  // Center widget added to center the button horizontally
+                  child: ElevatedButton(
+                onPressed: () async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  await preferences.setBool('showWelcomeScreen', false);
+                  _requestPermission(context);
+                  // Uncomment the following lines to navigate to the Home screen
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => const Home()),
+                  // );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255), // Use a modern color
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15.0, horizontal: 30.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        30.0), // Increased radius for a modern look
                   ),
-                  child: const Text(
-                    'Get Started',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black,
-                    ),
+                  elevation:
+                      5.0, 
+                ).copyWith(
+                  shadowColor:
+                      MaterialStateProperty.all(Colors.black.withOpacity(0.2)),
+                ),
+                child: const Text(
+                  'Get Started',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Color.fromARGB(255, 0, 0, 0), 
+                    fontWeight: FontWeight.bold, 
                   ),
                 ),
-              ),
+              )),
               const SizedBox(height: 60.0),
             ],
           ),
@@ -152,41 +157,39 @@ class WelcomeView extends StatelessWidget {
 }
 
 void _requestPermission(BuildContext context) {
-    PhotoManager.requestPermissionExtend().then((PermissionState state) {
-      if (state.isAuth) {
-        // Permission granted, navigate to GalleryView
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => Home()),
-        );
-      } else {
-        // Permission denied, show dialog and request permission again
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Permission Required'),
-              content: const Text(
-                  'This app requires access to your gallery to proceed. Please grant the necessary permissions.'),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('Deny'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: const Text('Allow'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _requestPermission(context);
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
-    });
-  }
-
-
+  PhotoManager.requestPermissionExtend().then((PermissionState state) {
+    if (state.isAuth) {
+      // Permission granted, navigate to GalleryView
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => Home()),
+      );
+    } else {
+      // Permission denied, show dialog and request permission again
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Permission Required'),
+            content: const Text(
+                'This app requires access to your gallery to proceed. Please grant the necessary permissions.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Deny'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('Allow'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _requestPermission(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  });
+}
