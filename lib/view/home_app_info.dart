@@ -100,7 +100,7 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
             effect: const ExpandingDotsEffect(
               activeDotColor: Colors.black,
               dotHeight: 8,
-              dotWidth: 8,
+              dotWidth: 15,
               spacing: 4,
             ),
           ),
@@ -117,14 +117,14 @@ class _HomeAppInfoState extends State<HomeAppInfo> {
         const SizedBox(height: 1),
         Text(
           heading,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 255, 255, 255)),
         ),
         const SizedBox(height: 1),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 1),
           child: Text(
             text,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Color.fromARGB(255, 255, 255, 255)),
             textAlign: TextAlign.center,
           ),
         ),

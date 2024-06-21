@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_app/view/home.dart';
 import 'package:photo_app/view/options.dart';
 import 'package:photo_app/view/contact_us.dart';
+import 'package:photo_app/view/welcome_view.dart';
 
 AppBar appBar() =>
     AppBar(automaticallyImplyLeading: false, title: const Text("PhotoApp"));
@@ -19,7 +20,7 @@ Drawer endDrawer(BuildContext context) {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const Home()),
+              MaterialPageRoute(builder: (context) => const WelcomeView()),
             ); // Ad
             // context
             // MaterialPageRoute(builder: (context) => Home()));

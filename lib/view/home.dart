@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:photo_app/image_paths.dart';
+import 'package:photo_app/Backend/image_search.dart';
+import 'package:photo_app/components/nav_bar.dart';
 import 'package:photo_app/view/gallery_manager.dart';
-import 'package:photo_app/view/home_app_info.dart';
+import 'package:photo_app/view/gallery_view.dart';
 import 'package:photo_app/view/top_suggestions.dart';
 import 'package:photo_manager/photo_manager.dart';
-import 'package:photo_app/components/nav_bar.dart';
-import 'package:photo_app/view/gallery_view.dart';
-import 'package:photo_app/Backend/image_search.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -30,7 +28,7 @@ class _HomeState extends State<Home> {
     if (paths.isNotEmpty) {
       final List<AssetEntity> assets = await paths[0].getAssetListRange(
         start: 0,
-        end: 100000, // Adjust the range based on your requirement
+        end: 100000,
       );
 
       final List<String> pathsList = [];
@@ -89,91 +87,96 @@ class _HomeState extends State<Home> {
           //         ),
           //       )
           //     :
-              //============================================================================
-              Stack(
+          //============================================================================
+          Stack(
+        children: [
+          // Background image
+          // Positioned.fill(
+          //   child: Image.asset(
+          //     'assets/icons/background.jpg',
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
+          Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/icons/splash.jpg'),
+                    fit: BoxFit.cover)),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(0, 208, 20, 20),
+                ),
+                width: screenWidth * 0.9,
+                height: screenHeight,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // Background image
-                    // Positioned.fill(
-                    //   child: Image.asset(
-                    //     'assets/icons/background.jpg',
-                    //     fit: BoxFit.cover,
-                    //   ),
-                    // ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.transparent,
+                    _buildMenuButton(
+                      context,
+                      "Top Suggestions",
+                      Icons.thumb_up,
+                      () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TopSuggestions(),
                           ),
-                          width: screenWidth * 0.9,
-                          height: screenHeight * 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const HomeAppInfo(),
-                              _buildMenuButton(
-                                context,
-                                "Top Suggestions",
-                                Icons.thumb_up,
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const TopSuggestions(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              _buildMenuButton(
-                                context,
-                                "Gallery Manager",
-                                Icons.photo_album,
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => GalleryManager(
-                                          assetPaths: assetPaths),
-                                    ),
-                                  );
-                                },
-                              ),
-                              _buildMenuButton(
-                                context,
-                                "PicScout",
-                                Icons.search,
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SearchPage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              _buildMenuButton(
-                                context,
-                                "Gallery",
-                                Icons.image,
-                                () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (_) =>
-                                          GalleryView(assetPaths: assetPaths, imageFiles: imageFiles)));
-                                },
-                              ),
-                            ],
+                        );
+                      },
+                    ),
+                    _buildMenuButton(
+                      context,
+                      "Gallery Manager",
+                      Icons.photo_album,
+                      () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                GalleryManager(assetPaths: assetPaths),
                           ),
-                        ),
-                      ),
+                        );
+                      },
+                    ),
+                    _buildMenuButton(
+                      context,
+                      "PicScout",
+                      Icons.search,
+                      () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildMenuButton(
+                      context,
+                      "Gallery",
+                      Icons.image,
+                      () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => GalleryView(
+                                assetPaths: assetPaths,
+                                imageFiles: imageFiles)));
+                      },
                     ),
                   ],
                 ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -182,7 +185,10 @@ class _HomeState extends State<Home> {
       if (state.isAuth) {
         Navigator.of(context).push(
           MaterialPageRoute(
-              builder: (_) => GalleryView(assetPaths: assetPaths, imageFiles: imageFiles,)),
+              builder: (_) => GalleryView(
+                    assetPaths: assetPaths,
+                    imageFiles: imageFiles,
+                  )),
         );
       }
     });
@@ -190,35 +196,38 @@ class _HomeState extends State<Home> {
 
   Widget _buildMenuButton(BuildContext context, String text, IconData iconData,
       VoidCallback onPressed) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueAccent,
-          shadowColor: Colors.black,
-          elevation: 15,
-          minimumSize: const Size(100, 45),
+          backgroundColor: Color.fromRGBO(0, 255, 255, 0.071),
+          // shadowColor: Colors.black,
+          elevation: 5,
+          fixedSize: Size(screenWidth * 0.9, screenHeight * 0.175),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
-            side: const BorderSide(color: Colors.black), // Add black margin
+            side: const BorderSide(
+                color: Color.fromRGBO(144, 224, 239, 1)), // Add black margin
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
               text,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
             Icon(
               iconData,
               size: 30,
-              color: Colors.black,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ],
         ),

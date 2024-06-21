@@ -1,152 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:photo_app/view/home.dart';
+import 'package:photo_app/view/home_app_info.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BackgroundTriangles extends StatelessWidget {
-  const BackgroundTriangles({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      size: MediaQuery.of(context).size,
-      painter: _BackgroundTrianglePainter(),
-    );
-  }
-}
-
-class _BackgroundTrianglePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.blueAccent
-      ..style = PaintingStyle.fill;
-
-    final double width = size.width;
-    final double height = size.height;
-
-    final List<List<Offset>> triangles = [
-      [
-        Offset(width * 0, height * 1),
-        Offset(width * 0, height * 0),
-        Offset(width * 0.5, height * 0.5),
-      ],
-      [
-        Offset(width * 0.5, height * 0),
-        Offset(width * 0, height * 0),
-        Offset(width * 0, height * 1),
-      ],
-      [
-        Offset(width * 1, height * 0.5),
-        Offset(width * 0, height * 1),
-        Offset(width * 0, height * 0),
-      ]
-    ];
-
-    final List<double> opacities = [
-      0.4,
-      0.5,
-      0.2
-    ]; // Define opacity levels for each triangle
-
-    for (int i = 0; i < triangles.length; i++) {
-      final triangle = triangles[i];
-      final path = Path()
-        ..moveTo(triangle[0].dx, triangle[0].dy)
-        ..lineTo(triangle[1].dx, triangle[1].dy)
-        ..lineTo(triangle[2].dx, triangle[2].dy)
-        ..close();
-
-      final paint = Paint()
-        ..color = Colors.blue
-            .withOpacity(opacities[i]); // Set opacity for each triangle
-      canvas.drawPath(path, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
-  }
-}
-
-class WelcomeView extends StatelessWidget {
+class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
 
   @override
+  State<WelcomeView> createState() => _WelcomeViewState();
+}
+
+class _WelcomeViewState extends State<WelcomeView> {
+  
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/icons/PhotoApp_LogoN.jpg'),
+                image: AssetImage('assets/icons/blue-background.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          // const BackgroundTriangles(key: Key('background_triangles')),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                  height: 100.0), // Added SizedBox to push the text lower
-              Text(
-                'PhotoApp',
-                style: TextStyle(
-                  fontSize: 70,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.0,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black.withOpacity(0.7),
-                      offset: const Offset(2, 2),
-                      blurRadius: 10,
-                    ),
-                  ],
-                ),
-              ),
+                  height: 300), 
+              const HomeAppInfo(),
               const Spacer(),
               Center(
-                  // Center widget added to center the button horizontally
                   child: ElevatedButton(
                 onPressed: () async {
                   SharedPreferences preferences =
                       await SharedPreferences.getInstance();
                   await preferences.setBool('showWelcomeScreen', false);
                   _requestPermission(context);
-                  // Uncomment the following lines to navigate to the Home screen
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const Home()),
-                  // );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 255, 255, 255), // Use a modern color
+                  fixedSize: Size(screenWidth*0.95, screenHeight*0.07),
+                  backgroundColor: const Color.fromARGB(
+                      255, 255, 255, 255),
                   padding: const EdgeInsets.symmetric(
                       vertical: 15.0, horizontal: 30.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
-                        30.0), // Increased radius for a modern look
+                        30.0), 
                   ),
-                  elevation:
-                      5.0, 
+                  elevation: 20.0,
                 ).copyWith(
                   shadowColor:
-                      MaterialStateProperty.all(Colors.black.withOpacity(0.2)),
+                      MaterialStateProperty.all(Colors.black.withOpacity(1)),
                 ),
                 child: const Text(
                   'Get Started',
                   style: TextStyle(
-                    fontSize: 18.0,
-                    color: Color.fromARGB(255, 0, 0, 0), 
-                    fontWeight: FontWeight.bold, 
+                    fontSize: 20.0,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              )),
+              ),
+              ),
               const SizedBox(height: 60.0),
             ],
           ),
