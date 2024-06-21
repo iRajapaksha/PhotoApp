@@ -28,7 +28,7 @@ Future<void> _uploadImages() async {
       return;
     }
 
-    var uri = Uri.parse('http://192.168.1.100:5002/upload');
+    var uri = Uri.parse('http://172.20.10.2:5002/upload');
     var request = http.Request('POST', uri);
     request.headers['Content-Type'] = 'application/json';
     request.body = jsonEncode({

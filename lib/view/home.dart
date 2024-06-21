@@ -75,20 +75,20 @@ class _HomeState extends State<Home> {
       body:
           // Not working for the emulator but works for the device
           //=============================================================================
-          assetPaths.isEmpty && progress < 1.0
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        value: progress,
-                      ),
-                      SizedBox(height: 20),
-                      Text('${(progress * 100).toStringAsFixed(0)}%'),
-                    ],
-                  ),
-                )
-              :
+          // assetPaths.isEmpty && progress < 1.0
+          //     ? Center(
+          //         child: Column(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             CircularProgressIndicator(
+          //               value: progress,
+          //             ),
+          //             SizedBox(height: 20),
+          //             Text('${(progress * 100).toStringAsFixed(0)}%'),
+          //           ],
+          //         ),
+          //       )
+          //     :
               //============================================================================
               Stack(
                   children: [

@@ -27,7 +27,7 @@ class _SimilarsState extends State<Similars> {
   int selectedPhotosetIndex = 0;
 
   Future<void> findSimilarImages(List<String> images) async {
-    const url = 'http://192.168.1.100:5000/find_similar_images';
+    const url = 'http://172.20.10.2:5000/find_similar_images';
 
     try {
       final response = await http.post(

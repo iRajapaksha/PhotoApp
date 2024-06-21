@@ -38,9 +38,7 @@ class _GalleryManagerState extends State<GalleryManager> {
               labelColor:
                   Colors.blueAccent, // Change the selected tab text color here
               tabs: [
-                Tab(
-                  text: "Duplicate",
-                ),
+                
                 Tab(
                   text: "Defected",
                 ),
@@ -51,7 +49,6 @@ class _GalleryManagerState extends State<GalleryManager> {
             ),
             Expanded(
               child: TabBarView(children: [
-                Duplicates(),
                 Defects(),
                 Similars(assetPaths: widget.assetPaths),
               ]),
