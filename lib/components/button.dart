@@ -7,22 +7,28 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return ElevatedButton(
       onPressed: () {
         onPressed();
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blueAccent,
-        minimumSize: const Size(150, 40),
+        elevation: 5,
+        backgroundColor: const Color.fromRGBO(144, 224, 239,1),
+        fixedSize:  Size(screenWidth*0.95, screenHeight*0.07),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
         ),
-      ),
-      child:  Text(
+      ).copyWith(
+                  shadowColor:
+                      MaterialStateProperty.all(Colors.black.withOpacity(1)),
+                ),
+      child: Text(
         title,
         style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
+          color: Color.fromARGB(255, 0, 0, 0),
+          fontSize: 20,
         ),
       ),
     );
