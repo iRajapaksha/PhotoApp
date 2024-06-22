@@ -98,9 +98,9 @@ class _HomeState extends State<Home> {
           //   ),
           // ),
           Container(
-            decoration: BoxDecoration(
+            decoration:const  BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/icons/splash.jpg'),
+                    image: AssetImage('assets/icons/wallpaper.jpg'),
                     fit: BoxFit.cover)),
           ),
           Align(
@@ -203,14 +203,14 @@ class _HomeState extends State<Home> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color.fromRGBO(0, 255, 255, 0.071),
+          backgroundColor: Color.fromRGBO(144, 224, 239, 0.5),
           // shadowColor: Colors.black,
           elevation: 5,
-          fixedSize: Size(screenWidth * 0.9, screenHeight * 0.175),
+          fixedSize: Size(screenWidth * 0.9, screenHeight * 0.15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
             side: const BorderSide(
-                color: Color.fromRGBO(144, 224, 239, 1)), // Add black margin
+                color: Color.fromRGBO(144, 224, 239, 1)), 
           ),
         ),
         child: Row(

@@ -26,7 +26,7 @@ class _GalleryManagerState extends State<GalleryManager> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: appBar(),
         endDrawer: endDrawer(context),

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 Container heading(double screenWidth, BuildContext context, String heading) {
     return Container(
-          color: const Color.fromARGB(255, 0, 147, 255),
+          color: const Color.fromRGBO(144, 224, 239,1),
           height: 35,
           width: screenWidth,
           child: Row(

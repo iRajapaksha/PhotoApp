@@ -62,7 +62,14 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
   }
 
   Widget buildContent(double screenWidth, double screenHeight) {
-    return SingleChildScrollView(
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage('assets/icons/wallpaper.jpg'),fit: BoxFit.cover)
+          ),
+        ),
+        SingleChildScrollView(
       child: Column(
         children: [
           heading(screenWidth, context, 'Sharing content'),
@@ -77,6 +84,10 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
           Button(onPressed: () => onPressed(context), title: 'Share')
         ],
       ),
+    )
+
+      ],
+
     );
   }
 

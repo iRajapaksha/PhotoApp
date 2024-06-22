@@ -10,6 +10,7 @@ import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_app/image_paths.dart';
 import 'package:path/path.dart' as p;
+
 class TopSuggestions extends StatefulWidget {
   const TopSuggestions({super.key});
 
@@ -22,7 +23,8 @@ class _TopSuggestionsState extends State<TopSuggestions> {
   late List<Photo> photos;
   final List<String> _imagePaths = imagePaths;
   List<String> _bestLookingImages = [];
-Future<void> _uploadImages() async {
+
+  Future<void> _uploadImages() async {
     if (_imagePaths.isEmpty) {
       print('No images to upload');
       return;
@@ -43,7 +45,8 @@ Future<void> _uploadImages() async {
         final data = json.decode(responseData.body);
 
         setState(() {
-          _bestLookingImages = List<String>.from(data['images_surpassing_thresholds']);
+          _bestLookingImages =
+              List<String>.from(data['images_surpassing_thresholds']);
         });
 
         print(_bestLookingImages);
@@ -69,27 +72,42 @@ Future<void> _uploadImages() async {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // final screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: appBar(),
-      endDrawer: endDrawer(context),
-      body: Column(
-        children: [
-          heading(screenWidth, context, 'Top Suggestions'),
-          const SizedBox(height: 30),
-          _scrollSnapList(screenWidth),
-          const SizedBox(height: 10),
-          Button(
-            onPressed: () {
-              onPressed(context);
-            },
-            title: 'Select',
-          ),
-          const SizedBox(height: 10),
-          _imageDescription(),
-        ],
-      ),
-    );
+        appBar: appBar(),
+        endDrawer: endDrawer(context),
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/icons/wallpaper.jpg'), // Update the path to your background image
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                heading(screenWidth, context, 'Top Suggestions'),
+                const SizedBox(height: 30),
+                _scrollSnapList(screenWidth),
+                const SizedBox(height: 10),
+                _imageDescription(),
+                const SizedBox(height: 10),
+                Button(
+                  onPressed: () {
+                    onPressed(context);
+                  },
+                  title: 'Select',
+                ),
+                SizedBox(
+                  height: screenHeight * 0.03,
+                )
+              ],
+            ),
+          ],
+        ));
   }
 
   Column _imageDescription() {
@@ -101,8 +119,9 @@ Future<void> _uploadImages() async {
             "Taken On: ${photos[selectedPhotoIndex].dateTime}",
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
           ),
@@ -126,8 +145,9 @@ Future<void> _uploadImages() async {
   Future<dynamic> onPressed(BuildContext context) {
     String baseDir =
         'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
-    List<String> relativePaths =
-        _bestLookingImages.map((path) => p.relative(path, from: baseDir)).toList();
+    List<String> relativePaths = _bestLookingImages
+        .map((path) => p.relative(path, from: baseDir))
+        .toList();
     return Navigator.push(
       context,
       MaterialPageRoute(
@@ -160,8 +180,9 @@ Future<void> _uploadImages() async {
   Widget _buildListItem(BuildContext context, int index) {
     String baseDir =
         'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
-    List<String> relativePaths =
-        _bestLookingImages.map((path) => p.relative(path, from: baseDir)).toList();
+    List<String> relativePaths = _bestLookingImages
+        .map((path) => p.relative(path, from: baseDir))
+        .toList();
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final photo = relativePaths[index];
@@ -171,14 +192,14 @@ Future<void> _uploadImages() async {
       height: screenHeight * 0.8,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(15),
           side: isFocused
               ? const BorderSide(color: Colors.lightBlue, width: 3)
               : BorderSide.none,
         ),
         elevation: isFocused ? 15 : 5,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(15),
           child: Image.asset(
             photo,
             fit: BoxFit.cover,

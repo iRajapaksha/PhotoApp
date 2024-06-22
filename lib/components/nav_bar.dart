@@ -5,10 +5,11 @@ import 'package:photo_app/view/contact_us.dart';
 import 'package:photo_app/view/welcome_view.dart';
 
 AppBar appBar() =>
-    AppBar(automaticallyImplyLeading: false, title: const Text("PhotoApp"));
+    AppBar(automaticallyImplyLeading: false, title: const Text("PhotoApp"),backgroundColor:Color.fromRGBO(237, 246, 249,1 ) ,);
 
 Drawer endDrawer(BuildContext context) {
   return Drawer(
+    backgroundColor: Color.fromRGBO(237, 246, 249,1 ),
     child: ListView(
       children: [
         DrawerHeader(
