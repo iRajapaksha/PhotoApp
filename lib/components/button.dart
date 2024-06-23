@@ -15,7 +15,7 @@ class Button extends StatelessWidget {
       },
       style: ElevatedButton.styleFrom(
         elevation: 5,
-        backgroundColor: const Color.fromRGBO(144, 224, 239,1),
+        backgroundColor: Colors.white,
         fixedSize:  Size(screenWidth*0.95, screenHeight*0.07),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),

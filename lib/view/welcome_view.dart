@@ -23,7 +23,7 @@ class _WelcomeViewState extends State<WelcomeView> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/icons/blue-background.jpg'),
+                image: AssetImage('assets/icons/new-background.jpg'),
                 fit: BoxFit.cover,
               ),
             ),

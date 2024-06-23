@@ -66,7 +66,7 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
       children: [
         Container(
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/icons/wallpaper.jpg'),fit: BoxFit.cover)
+            image: DecorationImage(image: AssetImage('assets/icons/background.jpg'),fit: BoxFit.cover)
           ),
         ),
         SingleChildScrollView(

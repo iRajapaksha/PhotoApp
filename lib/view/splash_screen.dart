@@ -48,17 +48,13 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // backgroundColor: Color.fromARGB(255, 2, 0, 114),
+      backgroundColor: Color.fromARGB(255, 2, 0, 114),
       body: Center(
-        child: Container(
-          decoration:const  BoxDecoration(
-            image: DecorationImage(image:AssetImage('assets/icons/splash.jpg'),fit: BoxFit.cover ) ,
-          ),
             child: FadeTransition(
           opacity: _animation,
           child: _splashScreen()
-        )),
-      ),
+        )
+        ),   
     );
   }
 
@@ -91,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen>
           ),
           const Text(
             '0.0.1',
-            style: TextStyle(color: Color.fromARGB(255, 57, 57, 57)),
+            style: TextStyle(color: Colors.grey),
           )
         ],
       ),

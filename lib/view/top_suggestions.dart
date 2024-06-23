@@ -82,7 +82,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      'assets/icons/wallpaper.jpg'), // Update the path to your background image
+                      'assets/icons/background.jpg'), // Update the path to your background image
                   fit: BoxFit.cover,
                 ),
               ),

@@ -90,17 +90,10 @@ class _HomeState extends State<Home> {
           //============================================================================
           Stack(
         children: [
-          // Background image
-          // Positioned.fill(
-          //   child: Image.asset(
-          //     'assets/icons/background.jpg',
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
           Container(
             decoration:const  BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/icons/wallpaper.jpg'),
+                    image: AssetImage('assets/icons/background.jpg'),
                     fit: BoxFit.cover)),
           ),
           Align(
@@ -203,14 +196,14 @@ class _HomeState extends State<Home> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color.fromRGBO(144, 224, 239, 0.5),
-          // shadowColor: Colors.black,
+          backgroundColor: Colors.blueAccent.withOpacity(0.6),
           elevation: 5,
           fixedSize: Size(screenWidth * 0.9, screenHeight * 0.15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
             side: const BorderSide(
-                color: Color.fromRGBO(144, 224, 239, 1)), 
+                color: Color.fromRGBO(144, 224, 239, 1)
+                ), 
           ),
         ),
         child: Row(
