@@ -21,10 +21,8 @@ Drawer endDrawer(BuildContext context) {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const WelcomeView()),
-            ); // Ad
-            // context
-            // MaterialPageRoute(builder: (context) => Home()));
+              MaterialPageRoute(builder: (context) => const Home()),
+            ); 
           },
           child: const ListTile(
             leading: Icon(Icons.home),
@@ -65,7 +63,7 @@ Drawer endDrawer(BuildContext context) {
         GestureDetector(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ContactUsApp()));
+                MaterialPageRoute(builder: (context) => const ContactUsPage()));
           },
           child: const ListTile(
             leading: Icon(Icons.contact_emergency),

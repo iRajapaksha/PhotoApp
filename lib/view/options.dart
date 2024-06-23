@@ -81,11 +81,15 @@ class Options extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(left: 15),
-                                    child: Text("Username"),
+                                    child: Text("Username", style: TextStyle(
+                                      color: Colors.white
+                                    ),),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(left: 15),
-                                    child: Text("username@gmail.com"),
+                                    child: Text("username@gmail.com", style: TextStyle(
+                                      color: Colors.white
+                                    ),),
                                   ),
                                 ],
                               ),
@@ -132,7 +136,7 @@ class Options extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      height: screenHeight*0.4,
+                      height: screenHeight*0.35,
                       width: screenWidth*0.8,
                       decoration: BoxDecoration(
                       border:  Border.all(

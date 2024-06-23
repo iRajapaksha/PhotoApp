@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'dart:convert';
 
+import 'package:photo_app/components/heading.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -146,14 +148,16 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('Image Search'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(2.0),
         child: Column(
           children: [
+            heading(screenWidth, context, 'PicScout'),
             Row(
               children: [
                 Expanded(

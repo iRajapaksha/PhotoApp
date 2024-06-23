@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blueAccent.withOpacity(0.6),
-          elevation: 5,
+         elevation: 2,
           fixedSize: Size(screenWidth * 0.9, screenHeight * 0.15),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
