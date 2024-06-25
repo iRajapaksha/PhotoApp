@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:file_picker/file_picker.dart';
 import 'dart:convert';
-
-import 'package:photo_app/components/heading.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,18 +26,14 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _keywordController = TextEditingController();
-  String _folderPath = "";
+  final String _folderPath = "D:/flutterProjects/photo_app/lib/image_search_test"; // Set your default folder path here
   Future<List<Map<String, dynamic>>>? _searchResults;
   bool _isIndexing = false;
 
-  Future<void> _pickFolder() async {
-    String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
-    if (selectedDirectory != null) {
-      setState(() {
-        _folderPath = selectedDirectory;
-      });
-      await _setImageFolderAndIndex();
-    }
+  @override
+  void initState() {
+    super.initState();
+    _setImageFolderAndIndex();
   }
 
   Future<void> _setImageFolderAndIndex() async {
@@ -50,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:5000/set_image_folder'),
+        Uri.parse('http://192.168.1.189:5000/set_image_folder'), // Use 10.0.2.2 for Android emulator to access localhost
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'image_folder': _folderPath}),
       );
@@ -74,7 +67,7 @@ class _SearchPageState extends State<SearchPage> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return const AlertDialog(
+        return AlertDialog(
           content: Row(
             children: [
               CircularProgressIndicator(),
@@ -88,7 +81,7 @@ class _SearchPageState extends State<SearchPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:5000/index_images'),
+        Uri.parse('http://192.168.1.189:5000/index_images'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -116,7 +109,7 @@ class _SearchPageState extends State<SearchPage> {
     }
 
     try {
-      final response = await http.get(Uri.parse('http://localhost:5000/search_images?keyword=$keyword'));
+      final response = await http.get(Uri.parse('http://192.168.1.189:5000/search_images?keyword=$keyword'));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         return data.map((item) => {
@@ -148,16 +141,15 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('Image Search'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(2.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            heading(screenWidth, context, 'PicScout'),
             Row(
               children: [
                 Expanded(
@@ -166,10 +158,11 @@ class _SearchPageState extends State<SearchPage> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.folder_open),
-                  onPressed: _pickFolder,
-                ),
+                // Hide the folder picker button
+                // IconButton(
+                //   icon: Icon(Icons.folder_open),
+                //   onPressed: _pickFolder,
+                // ),
               ],
             ),
             SizedBox(height: 16),
@@ -193,18 +186,18 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
             SizedBox(height: 16),
-            FutureBuilder<List<Map<String, dynamic>>>(
-              future: _searchResults,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Text('No results found.');
-                } else {
-                  return Expanded(
-                    child: GridView.builder(
+            Expanded(
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: _searchResults,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No results found.'));
+                  } else {
+                    return GridView.builder(
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         childAspectRatio: 1.0,
@@ -220,17 +213,17 @@ class _SearchPageState extends State<SearchPage> {
                               children: [
                                 Expanded(
                                   child: Image.network(
-                                    'http://localhost:5000/images/${Uri.encodeComponent(result['image_path'])}',
+                                    'http://10.0.2.2:5000/images/${Uri.encodeComponent(result['image_path'])}',
                                     fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
                                       return Center(child: Icon(Icons.error));
                                     },
                                   ),
                                 ),
-                                ListTile(
-                                  title: Text(result['caption']),
-                                  subtitle: Text('Similarity: ${result['similarity'].toStringAsFixed(4)}'),
-                                ),
+                                // ListTile(
+                                //   title: Text(result['caption']),
+                                //   subtitle: Text('Similarity: ${result['similarity'].toStringAsFixed(4)}'),
+                                // ),
                               ],
                             ),
                           );
@@ -238,10 +231,10 @@ class _SearchPageState extends State<SearchPage> {
                           return SizedBox.shrink(); // Hide if similarity is less than 0.35
                         }
                       },
-                    ),
-                  );
-                }
-              },
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
