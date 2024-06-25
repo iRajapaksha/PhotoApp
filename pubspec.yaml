@@ -86,6 +86,7 @@ flutter:
     - assets/icons/caption.json
     - assets/icons/search.json
     - assets/icons/social_media.json
+    - lib/Backend/Best_Looking_Samples/
   #   - images/a_dot_ham.jpeg
 
 
