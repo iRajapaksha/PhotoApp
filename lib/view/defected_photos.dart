@@ -44,7 +44,7 @@ class _DefectsState extends State<Defects> {
       return;
     }
 
-    var uri = Uri.parse('http://172.20.10.2:5001/upload');
+    var uri = Uri.parse('http://10.50.20.134:5001/upload');
     var request = http.Request('POST', uri);
     request.headers['Content-Type'] = 'application/json';
     request.body = jsonEncode({

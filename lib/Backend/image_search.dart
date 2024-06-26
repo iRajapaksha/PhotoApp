@@ -43,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.189:5000/set_image_folder'), // Use 10.0.2.2 for Android emulator to access localhost
+        Uri.parse('http://172.20.10.2:5000/set_image_folder'), // Use 10.0.2.2 for Android emulator to access localhost
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'image_folder': _folderPath}),
       );

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:photo_app/components/button.dart';
 import 'package:photo_app/components/heading.dart';
@@ -7,10 +10,15 @@ import 'package:photo_app/models/photo.dart';
 import 'package:photo_app/view/share_on.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:http/http.dart' as http;
 
 class TopSuggestionSelected extends StatefulWidget {
   final String selectedPhoto;
-  const TopSuggestionSelected({super.key, required this.selectedPhoto});
+  final File selectedImageFile;
+  const TopSuggestionSelected(
+      {super.key,
+      required this.selectedPhoto,
+      required this.selectedImageFile});
 
   @override
   State<TopSuggestionSelected> createState() => _TopSuggestionSelectedState();
@@ -22,12 +30,15 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
   String caption = "";
   int selectedCaptionIndex = 0;
   List<Caption> captions = [];
+  //final File _image = widget.selectedImageFile;
+  String _caption = '';
 
   @override
   void initState() {
     super.initState();
     textController = TextEditingController();
     _getInfo();
+    _generateCaption();
   }
 
   Future<void> _getInfo() async {
@@ -38,6 +49,31 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
         caption = captions[selectedCaptionIndex].description;
         textController.text = caption;
       });
+    }
+  }
+
+  Future<void> _generateCaption() async {
+    String imagePath =
+        'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/lib/Backend/Best_Looking_Samples/44129946_9eeb385d77.jpg';
+
+    File image = File(imagePath);
+    print(image);
+    //if (_image == null) return;
+
+    final request = http.MultipartRequest(
+        'POST', Uri.parse('http://192.168.1.1:5001/generate_caption'));
+    request.files.add(await http.MultipartFile.fromPath('image', image.path));
+
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      final responseBody = await response.stream.bytesToString();
+      final decodedResponse = json.decode(responseBody);
+      setState(() {
+        _caption = decodedResponse['caption'];
+        print(_caption);
+      });
+    } else {
+      print('Failed to generate caption');
     }
   }
 
@@ -66,28 +102,27 @@ class _TopSuggestionSelectedState extends State<TopSuggestionSelected> {
       children: [
         Container(
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/icons/background.jpg'),fit: BoxFit.cover)
-          ),
+              image: DecorationImage(
+                  image: AssetImage('assets/icons/background.jpg'),
+                  fit: BoxFit.cover)),
         ),
         SingleChildScrollView(
-      child: Column(
-        children: [
-          heading(screenWidth, context, 'Sharing content'),
-          SizedBox(height: 15),
-          _imageContainer(),
-          SizedBox(height: 10),
-          _subHeading(),
-          SizedBox(height: 10),
-          _scrollSnapList(screenHeight),
-          _editingContainer(screenWidth),
-          SizedBox(height: 5),
-          Button(onPressed: () => onPressed(context), title: 'Share')
-        ],
-      ),
-    )
-
+          child: Column(
+            children: [
+              heading(screenWidth, context, 'Sharing content'),
+              SizedBox(height: 15),
+              _imageContainer(),
+              SizedBox(height: 10),
+              _subHeading(),
+              SizedBox(height: 10),
+              _scrollSnapList(screenHeight),
+              _editingContainer(screenWidth),
+              SizedBox(height: 5),
+              Button(onPressed: () => onPressed(context), title: 'Share')
+            ],
+          ),
+        )
       ],
-
     );
   }
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:photo_app/components/button.dart';
@@ -30,7 +31,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
       return;
     }
 
-    var uri = Uri.parse('http://172.20.10.2:5002/upload');
+    var uri = Uri.parse('http://10.50.20.134:5002/upload');
     var request = http.Request('POST', uri);
     request.headers['Content-Type'] = 'application/json';
     request.body = jsonEncode({
@@ -82,7 +83,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                      'assets/icons/background  .jpg'), // Update the path to your background image
+                      'assets/icons/background.jpg'), // Update the path to your background image
                   fit: BoxFit.cover,
                 ),
               ),
@@ -145,6 +146,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
   Future<dynamic> onPressed(BuildContext context) {
     String baseDir =
         'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
+    File selectedImageFile =File(_bestLookingImages[selectedPhotoIndex]);
     List<String> relativePaths = _bestLookingImages
         .map((path) => p.relative(path, from: baseDir))
         .toList();
@@ -153,6 +155,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
       MaterialPageRoute(
         builder: (context) => TopSuggestionSelected(
           selectedPhoto: relativePaths[selectedPhotoIndex],
+          selectedImageFile: selectedImageFile,
         ),
       ),
     );

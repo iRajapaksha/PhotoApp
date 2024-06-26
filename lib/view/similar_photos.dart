@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:photo_app/image_paths.dart';
 import 'package:path/path.dart' as p;
+import 'package:image/image.dart' as img;
 
 class Similars extends StatefulWidget {
   final List<String> assetPaths;
@@ -27,7 +28,7 @@ class _SimilarsState extends State<Similars> {
   int selectedPhotosetIndex = 0;
 
   Future<void> findSimilarImages(List<String> images) async {
-    const url = 'http://172.20.10.2:5000/find_similar_images';
+    const url = 'http://10.50.20.134:5000/find_similar_images';
 
     try {
       final response = await http.post(
@@ -54,7 +55,7 @@ class _SimilarsState extends State<Similars> {
       }
     } catch (e) {
       debugPrint('Network Error: $e');
-    } 
+    }
   }
 
   @override
@@ -121,8 +122,7 @@ class _SimilarsState extends State<Similars> {
   }
 
   Widget _imageGroup(List<String> imagePaths) {
-    return
-        Expanded(
+    return Expanded(
       child: GridView.builder(
         itemCount: imagePaths.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -135,7 +135,6 @@ class _SimilarsState extends State<Similars> {
         },
       ),
     );
-
   }
 
   void multiSelection(String path) {
