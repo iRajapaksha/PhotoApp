@@ -21,13 +21,12 @@ class _DefectsState extends State<Defects> {
   List<Photo> photos = [];
   HashSet selectedItems = HashSet();
   List<String> images = imagePaths;
-  // String? _result;
   List<File> _imageFiles = [];
   List<String> blurImages = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadImages();
     _uploadImages();
@@ -38,13 +37,13 @@ class _DefectsState extends State<Defects> {
     photos = Photo.getPhotos();
   }
 
- Future<void> _uploadImages() async {
+  Future<void> _uploadImages() async {
     if (images.isEmpty) {
       print('No images to upload');
       return;
     }
 
-    var uri = Uri.parse('http://10.50.20.134:5001/upload');
+    var uri = Uri.parse('http://192.168.1.32:5001/upload');
     var request = http.Request('POST', uri);
     request.headers['Content-Type'] = 'application/json';
     request.body = jsonEncode({
@@ -58,14 +57,14 @@ class _DefectsState extends State<Defects> {
         var responseData = await http.Response.fromStream(response);
         final data = json.decode(responseData.body);
 
-        // Extracting the list of blur image paths
         setState(() {
           blurImages = List<String>.from(
               data['blur_images'].map((img) => img['image_path']));
+          _isLoading = false;
         });
+
         print(blurImages);
 
-        // Handle the response data as needed
       } else {
         print('Failed to upload images. Status code: ${response.statusCode}');
       }
@@ -75,15 +74,7 @@ class _DefectsState extends State<Defects> {
   }
 
   void _loadImages() {
-    // List<String> relativePaths = imagePaths.map((path) {
-    //   // Extract the file name from the absolute path
-    //   String fileName = path.split('/').last;
-    //   // Construct the relative path by appending the file name to the directory
-    //   return 'assets/Test_Data/$fileName';
-    // }).toList();
-
     setState(() {
-      // Create File objects from relative paths
       _imageFiles = images.map((path) => File(path)).toList();
     });
   }
@@ -94,7 +85,11 @@ class _DefectsState extends State<Defects> {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          Expanded(child: _imageGroup()),
+          Expanded(
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : _imageGroup(),
+          ),
           ElevatedButton(
               onPressed: () {},
               child: Text("Delete ${selectedItems.length} images")),
@@ -106,11 +101,6 @@ class _DefectsState extends State<Defects> {
   Column _imageGroup() {
     return Column(
       children: [
-        // Container(
-        //               height: 200,
-        //               decoration: const BoxDecoration(
-        //                   color: Color.fromARGB(255, 64, 255, 109)),
-        //             ),
         const SizedBox(
           height: 10,
         ),
@@ -184,46 +174,4 @@ class _DefectsState extends State<Defects> {
       ]),
     );
   }
-
-// Expanded _scrollSnapList(double screenWidth) {
-//     return Expanded(
-//       child: Center(
-//         child: ScrollSnapList(
-//           itemBuilder: _buildListItem,
-//           itemCount: 10,
-//           itemSize: screenWidth * 0.6,
-
-//           dynamicItemSize: true,
-//           duration: 10, onItemFocus: (int ) {  },
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildListItem(BuildContext context, int index) {
-//     final screenWidth = MediaQuery.of(context).size.width;
-//     final screenHeight = MediaQuery.of(context).size.height;
-//     final photo = photos[index];
-//     final isFocused = index ==1;
-//     return SizedBox(
-//       width: screenWidth * 0.6,
-//       height: screenHeight * 0.8,
-//       child: Card(
-//         shape: RoundedRectangleBorder(
-//           borderRadius: BorderRadius.circular(10),
-//           side: isFocused
-//               ? const BorderSide(color: Colors.lightBlue, width: 3)
-//               : BorderSide.none,
-//         ),
-//         elevation: isFocused ? 15 : 5,
-//         child: ClipRRect(
-//           borderRadius: BorderRadius.circular(10),
-//           child: Image.asset(
-//             photo.filePath,
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
 }

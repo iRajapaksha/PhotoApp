@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:photo_app/image_paths.dart';
 import 'package:path/path.dart' as p;
-import 'package:image/image.dart' as img;
 
 class Similars extends StatefulWidget {
   final List<String> assetPaths;
@@ -19,16 +18,14 @@ class Similars extends StatefulWidget {
 
 class _SimilarsState extends State<Similars> {
   List<Photo> photos = [];
-
   List<String> images = imagePaths;
-
   List<List<String>> _similarImages = [];
-
   HashSet selectedItems = HashSet();
   int selectedPhotosetIndex = 0;
+  bool _isLoading = true;
 
   Future<void> findSimilarImages(List<String> images) async {
-    const url = 'http://10.50.20.134:5000/find_similar_images';
+    const url = 'http://192.168.1.32:5000/find_similar_images';
 
     try {
       final response = await http.post(
@@ -43,6 +40,7 @@ class _SimilarsState extends State<Similars> {
           _similarImages = List<List<String>>.from(
             data['similar_images'].map((group) => List<String>.from(group)),
           );
+          _isLoading = false;
         });
         debugPrint('Similar Images: $_similarImages');
       } else {
@@ -72,12 +70,17 @@ class _SimilarsState extends State<Similars> {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          Expanded(child: _scrollSnapList(screenWidth)),
+          Expanded(
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : _scrollSnapList(screenWidth),
+          ),
           ElevatedButton(
-              onPressed: () {
-                // Handle delete action
-              },
-              child: Text("Delete ${selectedItems.length} images")),
+            onPressed: () {
+              // Handle delete action
+            },
+            child: Text("Delete ${selectedItems.length} images"),
+          ),
         ],
       ),
     );
@@ -201,7 +204,6 @@ class _SimilarsState extends State<Similars> {
     );
   }
 }
-
 
 
 // created this method  to get the test data list as a list of strings

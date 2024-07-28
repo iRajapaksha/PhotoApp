@@ -24,6 +24,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
   late List<Photo> photos;
   final List<String> _imagePaths = imagePaths;
   List<String> _bestLookingImages = [];
+  bool _isLoading = true;
 
   Future<void> _uploadImages() async {
     if (_imagePaths.isEmpty) {
@@ -31,7 +32,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
       return;
     }
 
-    var uri = Uri.parse('http://10.50.20.134:5002/upload');
+    var uri = Uri.parse('http://192.168.1.32:5002/upload');
     var request = http.Request('POST', uri);
     request.headers['Content-Type'] = 'application/json';
     request.body = jsonEncode({
@@ -48,14 +49,21 @@ class _TopSuggestionsState extends State<TopSuggestions> {
         setState(() {
           _bestLookingImages =
               List<String>.from(data['images_surpassing_thresholds']);
+          _isLoading = false;
         });
 
         print(_bestLookingImages);
       } else {
         print('Failed to upload images. Status code: ${response.statusCode}');
+        setState(() {
+          _isLoading = false;
+        });
       }
     } catch (e) {
       print('Error: $e');
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -75,40 +83,43 @@ class _TopSuggestionsState extends State<TopSuggestions> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: appBar(),
-        endDrawer: endDrawer(context),
-        body: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                      'assets/icons/background.jpg'), // Update the path to your background image
-                  fit: BoxFit.cover,
-                ),
+      appBar: appBar(),
+      endDrawer: endDrawer(context),
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/icons/background.jpg'), // Update the path to your background image
+                fit: BoxFit.cover,
               ),
             ),
-            Column(
-              children: [
-                heading(screenWidth, context, 'Top Suggestions'),
-                const SizedBox(height: 30),
-                _scrollSnapList(screenWidth),
-                const SizedBox(height: 10),
-                _imageDescription(),
-                const SizedBox(height: 10),
-                Button(
-                  onPressed: () {
-                    onPressed(context);
-                  },
-                  title: 'Select',
-                ),
-                SizedBox(
-                  height: screenHeight * 0.03,
-                )
-              ],
-            ),
-          ],
-        ));
+          ),
+          Column(
+            children: [
+              heading(screenWidth, context, 'Top Suggestions'),
+              const SizedBox(height: 30),
+              _isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : _scrollSnapList(screenWidth),
+              const SizedBox(height: 10),
+              // _imageDescription(),
+              const SizedBox(height: 10),
+              Button(
+                onPressed: () {
+                  onPressed(context);
+                },
+                title: 'Select',
+              ),
+              SizedBox(
+                height: screenHeight * 0.03,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Column _imageDescription() {
@@ -146,7 +157,7 @@ class _TopSuggestionsState extends State<TopSuggestions> {
   Future<dynamic> onPressed(BuildContext context) {
     String baseDir =
         'F:/Campus/5th semester/EE5454 Software Project/PhotoApp/PhotoApp/';
-    File selectedImageFile =File(_bestLookingImages[selectedPhotoIndex]);
+    File selectedImageFile = File(_bestLookingImages[selectedPhotoIndex]);
     List<String> relativePaths = _bestLookingImages
         .map((path) => p.relative(path, from: baseDir))
         .toList();
